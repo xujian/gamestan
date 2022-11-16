@@ -5,9 +5,9 @@ import * as serviceWorker from './serviceWorker'
 
 const root = createRoot(document.getElementById('root')!) // createRoot(container!) if you use TypeScript
 root.render(
-    <React.StrictMode>
-        <App />
-    </React.StrictMode>
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
 )
 
 // If you want your app to work offline and load faster, you can change
