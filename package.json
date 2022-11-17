@@ -5,6 +5,7 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@mui/icons-material": "^5.10.14",
     "@mui/material": "^5.10.14",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^13.1.1",
@@ -48,5 +49,8 @@
     "plugins": {
       "autoprefixer": {}
     }
+  },
+  "devDependencies": {
+    "@types/react-router-dom": "^5.3.3"
   }
 }

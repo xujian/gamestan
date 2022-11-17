@@ -1,12 +1,30 @@
+import { AppBar, Box, Button, IconButton, Toolbar, Typography } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
 import React from 'react'
 import DateDisplay from '../components/DateDisplay'
 
 const HomePage: React.FC = () => {
   return (
-    <div style={{ position: 'relative', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-      <h1 style={{ fontSize: '4em' }}>Hello world!</h1>
+    <>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon />
+          </IconButton>
+          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            News
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
       <DateDisplay />
-    </div>
+    </>
   )
 }
 
