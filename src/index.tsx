@@ -1,4 +1,5 @@
 import React from 'react'
+import CssBaseline from '@mui/material/CssBaseline'
 import { createRoot } from 'react-dom/client'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
@@ -6,6 +7,7 @@ import * as serviceWorker from './serviceWorker'
 const root = createRoot(document.getElementById('root')!) // createRoot(container!) if you use TypeScript
 root.render(
   <React.StrictMode>
+    <CssBaseline />
     <App />
   </React.StrictMode>
 )

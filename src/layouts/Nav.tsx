@@ -1,19 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { Drawer } from '@mui/material'
+import React from 'react'
+import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import InboxIcon from '@mui/icons-material/Inbox'
+import MailIcon from '@mui/icons-material/Mail'
 
 const sidebarWidth = 250
 
 const Nav: React.FC = () => {
   return (
-    <Drawer container={window.document.body}
-    variant='permanent'
-    open={true}
-    sx={{
-      width: sidebarWidth,
-      height: '100vh',
-      '& > div': { borderRight: 'none' }
-    }}>
-      
+    <Drawer
+      variant='permanent'
+      open={true}
+      sx={{
+        width: sidebarWidth,
+        height: '100vh',
+        '& > div': { borderRight: 'none' }
+      }}>
+      <List>
+        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+          <ListItem key={text} disablePadding>
+            <ListItemButton>
+              <ListItemIcon>
+                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
     </Drawer>
   )
 }
