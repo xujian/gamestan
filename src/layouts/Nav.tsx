@@ -12,8 +12,12 @@ const Nav: React.FC = () => {
       open={true}
       sx={{
         width: sidebarWidth,
+        flexShrink: 0,
         height: '100vh',
-        '& > div': { borderRight: 'none' }
+        '& .MuiDrawer-paper': {
+          position: 'static',
+          boxSizing: 'border-box',
+        }
       }}>
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (

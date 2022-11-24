@@ -1,5 +1,5 @@
 import React from 'react'
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
 import { changeColorMode, selectColorMode } from '../store/theme'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
@@ -14,8 +14,13 @@ const Header: React.FC = () => {
       dispatch(changeColorMode(colorMode === 'dark' ? 'light' : 'dark'))
     }
   return (
-    <AppBar component="header" position='fixed' elevation={0}
-      sx={{left: 250,right:0}}>
+    <AppBar component="header"
+      position='fixed'
+      elevation={0}
+      sx={{
+        left: 250,
+        right:0,
+        width: 'auto'}}>
       <Toolbar>
         <IconButton
           size="large"
