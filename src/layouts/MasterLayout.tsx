@@ -12,7 +12,12 @@ const MasterLayout: React.FC = () => {
     <Box sx={{ display: 'flex' }}>
       <Header />
       <Nav />
-      <Box component="main" sx={{mt:8,flexGrow:1}}>
+      <Box component="main"
+        sx={{
+          bgcolor: 'background.default',
+          mt:8,
+          flexGrow:1
+        }}>
         <Outlet />
       </Box>
     </Box>

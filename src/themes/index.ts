@@ -1,7 +1,3 @@
-import { createTheme } from '@mui/system'
+import defaultTheme from './default'
 
-const theme = createTheme({
-
-})
-
-export default theme
+export { defaultTheme }
