@@ -1,7 +1,7 @@
 import React, { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
-const MasterLayout = lazy(() => import('./layouts/MasterLayout'))
+const MasterLayout = lazy(() => import('./layouts/master'))
 const HomePage = lazy(() => import('./pages/HomePage'))
 
 

@@ -1,8 +1,8 @@
 import React from 'react'
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
-import { changeColorMode, selectColorMode } from '../store/theme'
-import { useAppDispatch, useAppSelector } from '../store/hooks'
+import { changeColorMode, selectColorMode } from '../../store/theme'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
