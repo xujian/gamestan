@@ -1,6 +1,6 @@
-import MasterLayout from './MasterLayout'
+import MasterLayout from './Layout'
 
-export * from './MasterLayout'
+export * from './Layout'
 export * from './Header'
 export * from './Nav'
 
