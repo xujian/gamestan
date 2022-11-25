@@ -9,7 +9,6 @@ import store from './store'
 const root = createRoot(document.getElementById('root')!) // createRoot(container!) if you use TypeScript
 root.render(
   <React.StrictMode>
-    <CssBaseline />
     <Provider store={store}>
       <App />
     </Provider>

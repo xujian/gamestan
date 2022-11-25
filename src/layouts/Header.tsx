@@ -15,6 +15,7 @@ const Header: React.FC = () => {
     }
   return (
     <AppBar component="header"
+      enableColorOnDark
       position='fixed'
       elevation={0}
       sx={{

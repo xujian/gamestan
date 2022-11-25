@@ -1,3 +1,4 @@
 import defaultTheme from './default'
+import AppThemeProvider from './provider'
 
-export { defaultTheme }
+export { defaultTheme, AppThemeProvider }
