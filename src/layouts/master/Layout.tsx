@@ -15,8 +15,9 @@ const MasterLayout: React.FC = () => {
       <Box component="main"
         sx={{
           bgcolor: 'background.default',
-          mt:8,
-          flexGrow:1
+          pt: 8,
+          flexGrow: 1,
+          height: '100vh'
         }}>
         <Outlet />
       </Box>
