@@ -1,8 +1,10 @@
-import React from 'react'
-import { Box } from '@mui/material'
+import React, { useEffect } from 'react'
+import { Box, useTheme, useMediaQuery } from '@mui/material'
 import Nav from './Nav'
 import Header from './Header'
 import { Outlet } from 'react-router-dom'
+import { closeNav, selectIsNavOpen } from './layout.slice'
+import { useAppDispatch, useAppSelector } from '../../store/hooks'
 
 /**
  * Vertical splitted layout

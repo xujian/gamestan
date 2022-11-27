@@ -1,12 +1,12 @@
 import React from 'react'
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
 import { changeColorMode, selectColorMode } from '../../store/theme'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import { selectIsNavOpen, toggleNav } from './layout.slice';
+import { selectIsNavOpen, toggleNav } from './layout.slice'
 
 const Header: React.FC = () => {
   const colorMode = useAppSelector(selectColorMode),
@@ -14,17 +14,22 @@ const Header: React.FC = () => {
     toggleColorMode = () => {
       dispatch(changeColorMode(colorMode === 'dark' ? 'light' : 'dark'))
     },
-    toggleSidebar = () => {
+    toggle = () => {
       dispatch(toggleNav())
     },
-    isNavOpen = useAppSelector(selectIsNavOpen)
+    isNavOpen = useAppSelector(selectIsNavOpen),
+    theme = useTheme(),
+    matchDownSm = useMediaQuery(theme.breakpoints.down('sm')),
+    left = isNavOpen
+      ? matchDownSm ? 0 : 250
+      : 0
   return (
     <AppBar component="header"
       enableColorOnDark
       position='fixed'
       elevation={0}
       sx={{
-        left: isNavOpen ? 250: 0,
+        left,
         right: 0,
         width: 'auto',
         transition: 'left 250ms'
@@ -35,7 +40,7 @@ const Header: React.FC = () => {
           edge="start"
           color="inherit"
           aria-label="menu"
-          onClick={toggleSidebar}>
+          onClick={toggle}>
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>

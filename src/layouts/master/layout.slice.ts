@@ -20,7 +20,6 @@ const layoutSlice = createSlice({
       state.isNavOpen = false
     },
     toggleNav: (state) => {
-      console.log('toggle nav')
       state.isNavOpen = !state.isNavOpen
     },
   }
