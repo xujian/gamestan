@@ -1,14 +1,9 @@
-import React, { useEffect } from 'react'
-import { Box, useTheme, useMediaQuery } from '@mui/material'
+import React from 'react'
+import { Box } from '@mui/material'
 import Nav from './Nav'
 import Header from './Header'
 import { Outlet } from 'react-router-dom'
-import { closeNav, selectIsNavOpen } from './layout.slice'
-import { useAppDispatch, useAppSelector } from '../../store/hooks'
 
-/**
- * Vertical splitted layout
- */
 const MasterLayout: React.FC = () => {
   return (
     <Box sx={{ display: 'flex' }}>
@@ -17,7 +12,8 @@ const MasterLayout: React.FC = () => {
       <Box component="main"
         sx={{
           bgcolor: 'background.default',
-          pt: 8,
+          p: 4,
+          pt: 10,
           flexGrow: 1,
           height: '100vh'
         }}>
