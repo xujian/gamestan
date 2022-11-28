@@ -1,12 +1,12 @@
-import { Card, CardHeader, useTheme } from '@mui/material'
-import { ForwardedRef, forwardRef } from 'react'
+import React, { ForwardedRef, forwardRef } from 'react'
+import { Card, CardHeader, CardContent, Typography, Divider, useTheme } from '@mui/material'
 
-interface CardProps {
+type CardProps = {
   [key: string]: any
 }
 
-const Card = forwardRef<Card, CardProps>(
-  (props: CardProps, ref: ForwardedRef<Card>) => {
+const AppCard = forwardRef<HTMLDivElement, CardProps>(
+  (props: CardProps, ref: ForwardedRef<HTMLDivElement>) => {
     const theme = useTheme()
     return (
       <Card
@@ -18,10 +18,10 @@ const Card = forwardRef<Card, CardProps>(
           borderRadius: 2,
           borderColor: theme.palette.mode === 'dark'
             ? theme.palette.divider
-            : theme.palette.grey.A800,
+            : theme.palette.grey,
           ':hover': {
             boxShadow: props.boxShadow
-              ? shadow || theme.customShadows.z1
+              ? props.shadow || theme.shadows[2]
               : 'inherit'
           },
           '& pre': {
@@ -40,14 +40,14 @@ const Card = forwardRef<Card, CardProps>(
         {props.darkTitle && props.title &&
           <CardHeader
             title={<Typography variant="h3">{props.title}</Typography>}
-            action={secondary} />}
+            action={props.secondary} />}
         {props.title && props.divider && <Divider />}
-        {props.content && <CardContent>{children}</CardContent>}
-        {!content && children}
+        {props.content && <CardContent>{props.children}</CardContent>}
+        {!props.content && props.children}
       </Card>
     )
   })
 
-Card.displayName = 'Card'
+AppCard.displayName = 'Card'
 
-export default Card
+export default AppCard
