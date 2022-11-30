@@ -19,6 +19,9 @@ const AppCard = forwardRef<HTMLDivElement, CardProps>(
           borderColor: theme.palette.mode === 'dark'
             ? theme.palette.divider
             : theme.palette.grey,
+          backgroundColor: theme.palette.mode === 'dark'
+            ? theme.palette.primary.dark
+            : theme.palette.primary.light,
           ':hover': {
             boxShadow: props.boxShadow
               ? props.shadow || theme.shadows[2]
