@@ -1,3 +1,5 @@
-export default const config = {
+const config = {
   
-} 
+}
+
+export default config

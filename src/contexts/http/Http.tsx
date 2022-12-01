@@ -1,13 +1,12 @@
 import React, { createContext, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import axios, { AxiosInstance,
   AxiosRequestConfig,
-  AxiosResponse, CreateAxiosDefaults } from 'axios'
+  AxiosResponse } from 'axios'
 import rootConfig from './config'
-import { HttpChannel, HttpClient, RequestInterceptor, ResponseInterceptor } from './types'
+import { HttpChannel, HttpClient, HttpResponse } from './types'
 import rootChannel from './root.channel'
 import merge from 'lodash/merge'
 import channels from './channels'
-import { channel } from 'diagnostics_channel'
 
 const HttpContext = createContext<AxiosInstance | null>(null)
 const coreChannels: HttpChannel[] = [rootChannel]
@@ -29,11 +28,12 @@ export const HttpProvider: React.FC<{
 }> = ({
   children,
 }) => {
-  let config: AxiosRequestConfig = {}
+  let config: AxiosRequestConfig = rootConfig
 
   coreChannels.forEach(channel => {
     config = merge(config, channel.config)
   })
+  console.log('HttpProvider ....', config)
 
   const instance =axios.create(config),
     ref = useRef(instance)
@@ -59,28 +59,25 @@ export const HttpProvider: React.FC<{
  * @param payload 
  * @returns 
  */
-export const useHttp = (
-  url: string, 
-  method: string,
-  payload: {[key: string]: any
-}) => {
-  const [data, setData] = useState(null)
-  const [error, setError] = useState('')
-  const [loaded, setLoaded] = useState(false)
+export const useHttp = () => {
 
-  const contextInstance = useContext(HttpContext)
+  const contextInstance = useContext(HttpContext) || axios.create()
   const instance = useMemo(() => {
     return contextInstance
   }, [contextInstance])
 
-  const abort = useRef(new AbortController())
-  const cancel = () => {
-    abort.current.abort()
-  }
-
-  const request = (config: AxiosRequestConfig) => {
-    return new Promise((resolve, reject) => {
-      axios.request(config)
+  const request = async (config: AxiosRequestConfig) => {
+    return new Promise<HttpResponse>((resolve, reject) => {
+      instance.request(config).then((rsp: AxiosResponse<HttpResponse>) => {
+        const status = rsp.status
+        if (status >= 200 && status < 300) {
+          resolve(rsp.data)
+        } else {
+          reject({
+            error: rsp.status
+          })
+        }
+      })
     })
   }
 
@@ -106,29 +103,6 @@ export const useHttp = (
       })
     },
   }
-
-  useEffect(() => {
-    (async () => {
-      try {
-        const response = await instance.request({
-          signal: abort.current.signal,
-          data: payload,
-          method,
-          url: `https://`,
-        })
-        setData(response.data)
-      } catch (e) {
-        if (axios.isAxiosError(e)) {
-          setError(e.message)
-        } else {
-          setError('Http Error')
-        }
-      } finally {
-        setLoaded(true);
-      }
-    })()
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   return { http }
 }

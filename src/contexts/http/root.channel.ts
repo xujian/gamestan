@@ -5,6 +5,10 @@ const match = (url: string) => true
 
 const config: AxiosRequestConfig = {
   baseURL: '/',
+  withCredentials: false,
+  params: {
+    key: process.env.REACT_APP_RAWG_KEY,
+  },
 }
 
 const requestInterceptor: RequestInterceptor = 
