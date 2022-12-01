@@ -1,8 +1,11 @@
 import { Grid, Typography } from '@mui/material'
 import React from 'react'
 import NumberCard from '../components/NumberCard'
+import { useHttp } from '../contexts/http/Http'
 
 const HomePage: React.FC = () => {
+  const { data } = useHttp('/games', 'get', {})
+  
   return (
     <Grid container rowSpacing={4.5} columnSpacing={2.75}>
       <Grid item xs={12} sx={{ mb: -2.25 }}>
