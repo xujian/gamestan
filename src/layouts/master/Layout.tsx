@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box } from '@mui/material'
+import { Box, Container } from '@mui/material'
 import Nav from './Nav'
 import Header from './Header'
 import { Outlet } from 'react-router-dom'
@@ -9,7 +9,7 @@ const MasterLayout: React.FC = () => {
     <Box sx={{ display: 'flex' }}>
       <Header />
       <Nav />
-      <Box component="main"
+      <Container component="main" maxWidth="lg"
         sx={{
           bgcolor: 'background.default',
           p: 4,
@@ -18,7 +18,7 @@ const MasterLayout: React.FC = () => {
           height: '100vh'
         }}>
         <Outlet />
-      </Box>
+      </Container>
     </Box>
   )
 }
