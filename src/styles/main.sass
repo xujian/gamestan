@@ -1,5 +1,6 @@
 @import './_variables'
 @import './_mixins'
+@import './scrollbar'
 
 *
   box-sizing: border-box
@@ -7,6 +8,7 @@
 
 html,
 body
+  @include scrollbars(8px, #000, #00000000)
   height: 100%
   overflow-x: hidden
 
