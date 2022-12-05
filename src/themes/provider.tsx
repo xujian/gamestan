@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { useAppSelector } from '../store/hooks'
-import { selectColorMode, selectScheme } from '../store/theme'
+import { selectColorMode, selectScheme } from './theme.slice'
 import schemes from './schemes'
 import componentOverrides from './overrides'
 import customShadows from './shadows'

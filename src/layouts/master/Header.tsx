@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { AppBar, IconButton, InputBase, Menu, MenuItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
-import { changeColorMode, selectColorMode, changeScheme } from '../../store/theme'
+import { changeColorMode, selectColorMode, changeScheme } from '../../themes/theme.slice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
@@ -88,9 +88,9 @@ const Header: React.FC = () => {
           MenuListProps={{
             'aria-labelledby': 'basic-button',
           }}>
-          <MenuItem onClick={() => onSchemeSelected}>Klein</MenuItem>
-          <MenuItem onClick={() => onSchemeSelected}>Aura</MenuItem>
-          <MenuItem onClick={() => onSchemeSelected}>Solarized</MenuItem>
+          <MenuItem onClick={() => onSchemeSelected('klein')}>Klein</MenuItem>
+          <MenuItem onClick={() => onSchemeSelected('aura')}>Aura</MenuItem>
+          <MenuItem onClick={() => onSchemeSelected('solarized')}>Solarized</MenuItem>
         </Menu>
       </Toolbar>
     </AppBar>

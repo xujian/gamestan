@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import theme from './theme'
+import theme from '../themes/theme.slice'
 import layout from '../layouts/master/layout.slice'
 
 const store = configureStore({
