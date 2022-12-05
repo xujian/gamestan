@@ -1,17 +1,19 @@
 import React, { useMemo } from 'react'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { useAppSelector } from '../store/hooks'
-import { selectColorMode } from '../store/theme'
+import { selectColorMode, selectScheme } from '../store/theme'
+import schemes from './schemes'
 import componentOverrides from './overrides'
 import customShadows from './shadows'
 import typography from './typography'
-import palette from './palette'
 
 const AppThemeProvider: React.FC<{
   children: React.ReactNode;
 }> = ({ children }) => {
   const colorMode = useAppSelector(selectColorMode),
-    paletteTheme = palette(colorMode)
+    scheme = useAppSelector(selectScheme),
+    makeThemeOptions = schemes[scheme] || schemes['klein'],
+    paletteTheme = makeThemeOptions(colorMode)
   const themeOptions = useMemo(
     () => ({
       breakpoints: {
@@ -35,7 +37,7 @@ const AppThemeProvider: React.FC<{
       typography: typography(paletteTheme)
     }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [paletteTheme]
+    [scheme, colorMode, paletteTheme]
   )
   const theme = createTheme(themeOptions)
   theme.components = componentOverrides(theme)

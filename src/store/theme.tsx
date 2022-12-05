@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { ColorMode } from '../themes/types'
 import type { RootState } from './'
 
-type ColorMode = 'dark' | 'light'
-
 interface ThemeState {
-  colorMode: ColorMode
+  colorMode: ColorMode,
+  scheme: string
 }
 
 const initialState: ThemeState = {
-  colorMode: 'dark'
+  colorMode: 'dark',
+  scheme: 'klein'
 }
 
 export const themeSlice = createSlice({
@@ -18,12 +19,16 @@ export const themeSlice = createSlice({
     changeColorMode: (state, action: PayloadAction<ColorMode>) => {
       state.colorMode = action.payload
     },
+    changeScheme: (state, action: PayloadAction<string>) => {
+      state.scheme = action.payload
+    },
   }
 })
 
-export const { changeColorMode } = themeSlice.actions
+export const { changeColorMode, changeScheme } = themeSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectColorMode = (state: RootState) => state.theme.colorMode
+export const selectScheme = (state: RootState) => state.theme.scheme
 
 export default themeSlice.reducer

@@ -1,6 +1,6 @@
-import { ThemeOptions } from '@mui/material'
+import { ColorMode, SchemeBuilder } from '../types'
 
-const theme: ThemeOptions = {
+const theme: SchemeBuilder = (mode: ColorMode) => ({
   palette: {
     primary: {
       light: '#757ce8',
@@ -13,8 +13,13 @@ const theme: ThemeOptions = {
       main: '#18C050',
       dark: '#ba000d',
       contrastText: '#000',
+    },
+    background: {
+      default: mode === 'dark'
+        ? '#001e3c'
+        : '#eee'
     }
   }
-}
+})
 
 export default theme

@@ -1,11 +1,12 @@
-import React from 'react'
-import { AppBar, IconButton, InputBase, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import React, { useState } from 'react'
+import { AppBar, IconButton, InputBase, Menu, MenuItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu'
-import { changeColorMode, selectColorMode } from '../../store/theme'
+import { changeColorMode, selectColorMode, changeScheme } from '../../store/theme'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
+import ColorLensIcon from '@mui/icons-material/ColorLens';
 import SearchIcon from '@mui/icons-material/Search'
 import { selectIsNavOpen, toggleNav } from './layout.slice'
 
@@ -15,18 +16,27 @@ const Header: React.FC = () => {
     toggleColorMode = () => {
       dispatch(changeColorMode(colorMode === 'dark' ? 'light' : 'dark'))
     },
-    toggle = () => {
-      dispatch(toggleNav())
-    },
     isNavOpen = useAppSelector(selectIsNavOpen),
     theme = useTheme(),
     matchDownSm = useMediaQuery(theme.breakpoints.down('sm')),
     left = isNavOpen
       ? matchDownSm ? 0 : 250
       : 0
+  const [schemesMenuAnchor, setSchemesMenuAnchor]
+    = useState<null | HTMLElement>(null),
+    closeSchemesMenu = () => {
+      setSchemesMenuAnchor(null)
+    },
+    openSchemesMenu = (event: React.MouseEvent<HTMLElement>) => {
+      setSchemesMenuAnchor(event.currentTarget)
+    },
+    onSchemeSelected = (scheme: string) => {
+      dispatch(changeScheme(scheme))
+    }
+
   return (
     <AppBar component="header"
-      enableColorOnDark
+      // enableColorOnDark
       position='fixed'
       elevation={0}
       sx={{
@@ -41,7 +51,7 @@ const Header: React.FC = () => {
           edge="start"
           color="inherit"
           aria-label="menu"
-          onClick={toggle}>
+          onClick={() => dispatch(toggleNav())}>
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
@@ -63,6 +73,25 @@ const Header: React.FC = () => {
           onClick={toggleColorMode}>
             {colorMode === 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
           </IconButton>
+        <IconButton
+          id="scheme-button"
+          size="large"
+          aria-label="colorScheme"
+          onClick={openSchemesMenu}>
+          <ColorLensIcon />
+        </IconButton>
+        <Menu
+          id="scheme-menu"
+          anchorEl={schemesMenuAnchor}
+          open={Boolean(schemesMenuAnchor)}
+          onClose={closeSchemesMenu}
+          MenuListProps={{
+            'aria-labelledby': 'basic-button',
+          }}>
+          <MenuItem onClick={() => onSchemeSelected}>Klein</MenuItem>
+          <MenuItem onClick={() => onSchemeSelected}>Aura</MenuItem>
+          <MenuItem onClick={() => onSchemeSelected}>Solarized</MenuItem>
+        </Menu>
       </Toolbar>
     </AppBar>
   )
