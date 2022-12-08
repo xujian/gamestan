@@ -1,4 +1,4 @@
-import React, { Card, CardActionArea, CardContent, CardMedia, Chip, Rating, Typography } from '@mui/material'
+import React, { Card, CardActionArea, CardContent, CardMedia, Rating, Typography } from '@mui/material'
 
 type GameCardProps = {
   game: any

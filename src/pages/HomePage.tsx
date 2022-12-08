@@ -1,5 +1,4 @@
-import { Card, CardActionArea, CardContent, CardMedia, Grid, Typography } from '@mui/material'
-import { Stack } from '@mui/system'
+import { Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import GameCard from '../components/GameCard'
 import NumberCard from '../components/NumberCard'

@@ -2,6 +2,7 @@ import { SchemeBuilder } from '../types'
 import aura from './aura'
 import klein from './klein'
 import solarized from './solarized'
+import balmy from './balmy'
 
 /**
  * Color schemes of theme
@@ -12,6 +13,7 @@ const schemes: Record<string, SchemeBuilder> = {
   aura,
   solarized,
   klein,
+  balmy,
 }
 
 export default schemes

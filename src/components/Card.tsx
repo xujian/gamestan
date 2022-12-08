@@ -1,5 +1,5 @@
 import React, { ForwardedRef, forwardRef } from 'react'
-import { Card, CardHeader, CardContent, Typography, Divider, useTheme } from '@mui/material'
+import { Card, CardContent, Typography, useTheme } from '@mui/material'
 
 type CardProps = {
   [key: string]: any
