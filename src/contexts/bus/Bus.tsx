@@ -73,16 +73,15 @@ export const useBus = () => {
   return bus
 }
 
-// type BusExtraProps = {
-//   bus: Bus
-// }
+type BusExtraProps = {
+  bus: Bus
+}
 
-// export function withBus<P> (Component: React.FC<P & BusExtraProps>): React.FC {
-//   const bus = useContext(BusContext)
-//   const WithBusFC = (props: P) => (
-//     <Component {...props} bus={bus}>
-//       {props.children}
-//     </Component>
-//   )
-//   return WithBusFC
-// } 
+export function WithBus<P extends BusExtraProps> (Component: React.FC<P>): React.FC<P> {
+  const bus = useContext(BusContext)
+  const fc: React.FC<P> = (props: P) => (
+    <Component {...props} bus={bus} />
+  )
+  fc.displayName = 'WithBus'
+  return fc
+} 
