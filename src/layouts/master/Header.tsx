@@ -9,6 +9,7 @@ import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import SearchIcon from '@mui/icons-material/Search'
 import { selectIsNavOpen, toggleNav } from './layout.slice'
+import Loading from './Loading';
 
 const Header: React.FC = () => {
   const colorMode = useAppSelector(selectColorMode),
@@ -93,6 +94,7 @@ const Header: React.FC = () => {
           <MenuItem onClick={() => onSchemeSelected('solarized')}>Solarized</MenuItem>
         </Menu>
       </Toolbar>
+      <Loading />
     </AppBar>
   )
 }

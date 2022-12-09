@@ -2,6 +2,7 @@ import { Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import GameCard from '../components/GameCard'
 import NumberCard from '../components/NumberCard'
+import { useBus } from '../contexts/bus'
 import { useHttp } from '../contexts/http/Http'
 
 const HomePage: React.FC = () => {
@@ -9,15 +10,18 @@ const HomePage: React.FC = () => {
   const [games, setGames] = useState<Record<string, any>>({results:[]})
   const [genres, setGenres] = useState<Record<string, any>>({results:[]})
   const [isLoading, setIsLoading] = useState(false)
+  const bus = useBus()
 
   useEffect(() => {
+    bus.emit('loading.start')
     http.get('https://api.rawg.io/api/games').then(rsp => {
       setGames(rsp)
-      setIsLoading(false)
+      // bus.emit('loading.stop')
     })
     http.get('https://api.rawg.io/api/genres').then(rsp => {
       setGenres(rsp)
       setIsLoading(false)
+      // bus.emit('loading.stop')
     })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
