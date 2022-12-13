@@ -9,13 +9,13 @@ const MasterLayout: React.FC = () => {
     <Box sx={{ display: 'flex' }}>
       <Header />
       <Nav />
-      <Container component="main" maxWidth="lg"
+      <Container component="main"
         sx={{
           bgcolor: 'background.default',
-          p: 4,
-          pt: 10,
+          p: 0,
+          pt: 8,
           flexGrow: 1,
-          height: '100vh'
+          minHeight: '100vh'
         }}>
         <Outlet />
       </Container>

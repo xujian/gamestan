@@ -35,7 +35,7 @@ export default function Loading () {
   })
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box className="loading" sx={{ width: '100%', marginTop: '-4px' }}>
       <LinearProgress variant="determinate" value={progress} />
     </Box>
   );
