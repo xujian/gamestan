@@ -9,7 +9,7 @@ const MasterLayout: React.FC = () => {
     <Box sx={{ display: 'flex' }}>
       <Header />
       <Nav />
-      <Container component="main"
+      <Container component="main" maxWidth="xl"
         sx={{
           bgcolor: 'background.default',
           p: 0,

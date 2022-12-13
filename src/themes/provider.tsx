@@ -20,11 +20,12 @@ const AppThemeProvider: React.FC<{
         values: {
           xs: 0,
           sm: 768,
-          md: 1024,
-          lg: 1266,
-          xl: 1536,
+          md: 960,
+          lg: 1280,
+          xl: 1920,
         }
       },
+      spacing: 0,
       mixins: {
         toolbar: {
           minHeight: 60,
