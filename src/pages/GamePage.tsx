@@ -19,10 +19,10 @@ const GamePage: React.FC = () => {
 
     const heroSx = {
       width: '100vw',
-      backgroundSize: 'contain',
+      backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
-      aspectRatio: '16/9',
-      maxWidth: 1920,
+      aspectRatio: '16/8',
+      maxWidth: 960,
       display: 'flex',
     }
   return (

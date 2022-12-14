@@ -19,13 +19,12 @@ const AppThemeProvider: React.FC<{
       breakpoints: {
         values: {
           xs: 0,
-          sm: 768,
+          sm: 640,
           md: 960,
           lg: 1280,
           xl: 1920,
         }
       },
-      spacing: 0,
       mixins: {
         toolbar: {
           minHeight: 60,
