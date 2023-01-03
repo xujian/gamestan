@@ -1,16 +1,10 @@
-
-=scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%))
+@mixin scrollbars($size, $foreground-color, $background-color: mix($foreground-color, white,  50%))
   &::-webkit-scrollbar
     width:  $size
     height: $size
-    z-index: 1000
-    position: fixed
 
   &::-webkit-scrollbar-thumb
     background: $foreground-color
-    z-index: 1000
-    border-radius: 4px
 
   &::-webkit-scrollbar-track
     background: $background-color
-    z-index: 1000
