@@ -1,34 +1,41 @@
 import React from 'react'
-import { Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from '@mui/material'
+import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, useMediaQuery, useTheme } from '@mui/material'
 import InboxIcon from '@mui/icons-material/Inbox'
 import MailIcon from '@mui/icons-material/Mail'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
-import { closeNav, selectIsNavOpen } from './layout.slice'
+import { closeAside, selectIsAsideOpen } from './layout.slice'
 
-const navWidth = 250
+const asideWidth = 250
 
-const Nav: React.FC = () => {
-  const isNavOpen = useAppSelector(selectIsNavOpen),
+const Aside: React.FC = () => {
+  const isAsideOpen = useAppSelector(selectIsAsideOpen),
     theme = useTheme(),
     matchDownSm = useMediaQuery(theme.breakpoints.down('sm')),
     dispatch = useAppDispatch(),
     close = () => {
-      dispatch(closeNav())
+      dispatch(closeAside())
     }
   return (
     <Drawer
+      className="app-nav"
       sx={{
-        width: isNavOpen ? navWidth : 0,
+        width: isAsideOpen ? asideWidth : 0,
         flexShrink: 1,
         '& .MuiDrawer-paper': {
-          width: navWidth,
+          width: asideWidth,
+          backgroundColor: 'transparent',
           boxSizing: 'border-box',
+          borderRight: 0,
         },
+        '& .header': {
+          height: 64
+        }
       }}
       variant={ matchDownSm ? 'temporary': 'persistent' }
       anchor="left"
-      open={isNavOpen}
+      open={isAsideOpen}
       onClose={close}>
+      <Box className="header"></Box>
       <List>
         {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
           <ListItem key={text} disablePadding>
@@ -45,4 +52,4 @@ const Nav: React.FC = () => {
   )
 }
 
-export default Nav
+export default Aside

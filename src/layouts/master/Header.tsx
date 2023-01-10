@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AppBar, ButtonGroup, IconButton, InputBase, Menu, MenuItem, Paper, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material'
+import { AppBar, IconButton, InputBase, Menu, MenuItem, Paper, Toolbar, useMediaQuery, useTheme } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { changeColorMode, selectColorMode, changeScheme } from '../../themes/theme.slice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
@@ -8,7 +8,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import SearchIcon from '@mui/icons-material/Search'
-import { selectIsNavOpen, toggleNav } from './layout.slice'
+import { toggleAside } from './layout.slice'
 import Loading from './Loading';
 
 const Header: React.FC = () => {
@@ -16,17 +16,10 @@ const Header: React.FC = () => {
     dispatch = useAppDispatch(),
     toggleColorMode = () => {
       dispatch(changeColorMode(colorMode === 'dark' ? 'light' : 'dark'))
-    },
-    isNavOpen = useAppSelector(selectIsNavOpen),
-    theme = useTheme(),
-    downSm = useMediaQuery(theme.breakpoints.down('sm')),
-    left = isNavOpen
-      ? downSm
-        ? 0
-        : 250
-      : 0
+    }
   const [schemesMenuAnchor, setSchemesMenuAnchor]
     = useState<null | HTMLElement>(null),
+    theme = useTheme(),
     closeSchemesMenu = () => {
       setSchemesMenuAnchor(null)
     },
@@ -38,14 +31,12 @@ const Header: React.FC = () => {
     }
 
   return (
-    <AppBar className="app-bar" component="header"
-      // enableColorOnDark
+    <AppBar className="header" component="header"
       color='transparent'
       position='fixed'
       elevation={0}
       sx={{
-        left,
-        right: 0,
+        display: 'flex',
         alignItems: 'stretch',
         justifyContent: 'center'
       }}>
@@ -68,7 +59,7 @@ const Header: React.FC = () => {
           disableRipple
           size="large"
           color="inherit"
-          onClick={() => dispatch(toggleNav())}>
+          onClick={() => dispatch(toggleAside())}>
           <MenuIcon />
         </IconButton>
         <Paper
@@ -78,8 +69,8 @@ const Header: React.FC = () => {
             display: 'flex',
             flexGrow: 1,
             border: `1px solid ${theme.palette.divider}`,
-            backgroundColor: '#ffffff33',
-            backdropFilter: 'blur(20px)',
+            backgroundColor: '#33333333',
+            backdropFilter: 'saturate(200%) blur(20px)',
           }}>
           <InputBase placeholder='Search games...'
             inputProps={{'aria-label': 'Search games...'}}

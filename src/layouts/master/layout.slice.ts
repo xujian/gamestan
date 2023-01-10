@@ -2,31 +2,31 @@ import { createSlice } from '@reduxjs/toolkit'
 import type { RootState } from '../../store'
 
 interface LayoutState {
-  isNavOpen: boolean
+  isAsideOpen: boolean
 }
 
 const initialState: LayoutState = {
-  isNavOpen: false
+  isAsideOpen: false
 }
 
 const layoutSlice = createSlice({
   name: 'layout',
   initialState,
   reducers: {
-    openNav: (state) => {
-      state.isNavOpen = true
+    openAside: (state) => {
+      state.isAsideOpen = true
     },
-    closeNav: (state) => {
-      state.isNavOpen = false
+    closeAside: (state) => {
+      state.isAsideOpen = false
     },
-    toggleNav: (state) => {
-      state.isNavOpen = !state.isNavOpen
+    toggleAside: (state) => {
+      state.isAsideOpen = !state.isAsideOpen
     },
   }
 })
 
-export const { openNav, closeNav, toggleNav } = layoutSlice.actions
+export const { openAside, closeAside, toggleAside } = layoutSlice.actions
 
-export const selectIsNavOpen = (state: RootState) => state.layout.isNavOpen
+export const selectIsAsideOpen = (state: RootState) => state.layout.isAsideOpen
 
 export default layoutSlice.reducer
