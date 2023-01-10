@@ -25,6 +25,9 @@ const AppThemeProvider: React.FC<{
           xl: 1920,
         }
       },
+      shape: {
+        borderRadius: 20,
+      },
       mixins: {
         toolbar: {
           minHeight: 60,

@@ -3,28 +3,22 @@ import { ColorMode, SchemeBuilder } from '../types'
 const theme: SchemeBuilder = (mode: ColorMode) => ({
   palette: {
     primary: {
-      light: '#757ce8',
-      main: '#1F18C0',
-      dark: '#002884',
-      contrastText: '#fff',
+      main: '#010c80',
     },
     secondary: {
-      light: '#ff7961',
-      main: '#18C050',
-      dark: '#ba000d',
-      contrastText: '#000',
+      main: '#31c48d',
     },
     text: {
       primary: mode === 'dark'
         ? '#fff'
-        : '#93a1a1',
+        : '#666666',
     },
     background: {
       paper: mode === 'dark'
-        ? '#001e3c'
+        ? '#010c80'
         : '#eee',
       default: mode === 'dark'
-        ? '#002b36'
+        ? '#000752'
         : '#eee'
     }
   }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { AppBar, IconButton, InputBase, Menu, MenuItem, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material';
+import { AppBar, ButtonGroup, IconButton, InputBase, Menu, MenuItem, Paper, Toolbar, Typography, useMediaQuery, useTheme } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { changeColorMode, selectColorMode, changeScheme } from '../../themes/theme.slice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
@@ -19,9 +19,11 @@ const Header: React.FC = () => {
     },
     isNavOpen = useAppSelector(selectIsNavOpen),
     theme = useTheme(),
-    matchDownSm = useMediaQuery(theme.breakpoints.down('sm')),
+    downSm = useMediaQuery(theme.breakpoints.down('sm')),
     left = isNavOpen
-      ? matchDownSm ? 0 : 250
+      ? downSm
+        ? 0
+        : 250
       : 0
   const [schemesMenuAnchor, setSchemesMenuAnchor]
     = useState<null | HTMLElement>(null),
@@ -36,63 +38,102 @@ const Header: React.FC = () => {
     }
 
   return (
-    <AppBar component="header"
+    <AppBar className="app-bar" component="header"
       // enableColorOnDark
+      color='transparent'
       position='fixed'
       elevation={0}
       sx={{
         left,
         right: 0,
-        width: 'auto',
-        transition: 'left 250ms'
+        alignItems: 'stretch',
+        justifyContent: 'center'
       }}>
-      <Toolbar>
+      <Toolbar className="toolbar"
+        sx={{
+          width: '100%',
+          maxWidth:'1280px',
+          margin: 'auto',
+          px: {
+            xs: 0,
+            sm: 0,
+            md: 0,
+            lg: 0,
+          },
+        }}>
+        <a href="/">
+          <img className='logo' src="/logo.svg" height={24} />
+        </a>
         <IconButton
+          disableRipple
           size="large"
-          edge="start"
           color="inherit"
-          aria-label="menu"
           onClick={() => dispatch(toggleNav())}>
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          GameStan
-        </Typography>
-        <InputBase placeholder='Search games...'
-          inputProps={{'aria-label': 'Search games...'}} />
-        <IconButton type='button' aria-label='search'>
-          <SearchIcon />
-        </IconButton>
-        <IconButton 
-          size="large"
-          aria-label="account">
-            <AccountBoxIcon />
-          </IconButton>
-        <IconButton 
-          size="large"
-          aria-label="colorMode"
-          onClick={toggleColorMode}>
-            {colorMode === 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
-          </IconButton>
-        <IconButton
-          id="scheme-button"
-          size="large"
-          aria-label="colorScheme"
-          onClick={openSchemesMenu}>
-          <ColorLensIcon />
-        </IconButton>
-        <Menu
-          id="scheme-menu"
-          anchorEl={schemesMenuAnchor}
-          open={Boolean(schemesMenuAnchor)}
-          onClose={closeSchemesMenu}
-          MenuListProps={{
-            'aria-labelledby': 'basic-button',
+        <Paper
+          elevation={0}
+          variant="outlined"
+          sx={{
+            display: 'flex',
+            flexGrow: 1,
+            border: `1px solid ${theme.palette.divider}`,
+            backgroundColor: '#ffffff33',
+            backdropFilter: 'blur(20px)',
           }}>
-          <MenuItem onClick={() => onSchemeSelected('klein')}>Klein</MenuItem>
-          <MenuItem onClick={() => onSchemeSelected('aura')}>Aura</MenuItem>
-          <MenuItem onClick={() => onSchemeSelected('solarized')}>Solarized</MenuItem>
-        </Menu>
+          <InputBase placeholder='Search games...'
+            inputProps={{'aria-label': 'Search games...'}}
+            sx={{
+              flexGrow: 1,
+              height: '40px',
+              mx: 2,
+              px: 1,
+            }} />
+          <IconButton type='button' aria-label='search'
+            color="inherit">
+            <SearchIcon />
+          </IconButton>
+        </Paper>
+        <Paper
+          elevation={0}
+          sx={{
+            display: 'flex',
+            border: `1px solid ${theme.palette.divider}`,
+            backgroundColor: '#ffffff33',
+            backdropFilter: 'blur(20px)',
+            marginLeft: '1em'
+          }}>
+          <IconButton
+            color="inherit"
+            aria-label="account">
+              <AccountBoxIcon />
+            </IconButton>
+          <IconButton 
+            color="inherit"
+            aria-label="colorMode"
+            onClick={toggleColorMode}>
+              {colorMode === 'dark' ? <DarkModeIcon /> : <LightModeIcon />}
+            </IconButton>
+          <IconButton
+            id="scheme-button"
+            color="inherit"
+            aria-label="colorScheme"
+            onClick={openSchemesMenu}>
+            <ColorLensIcon />
+          </IconButton>
+          <Menu
+            id="scheme-menu"
+            anchorEl={schemesMenuAnchor}
+            open={Boolean(schemesMenuAnchor)}
+            onClose={closeSchemesMenu}
+            MenuListProps={{
+              'aria-labelledby': 'basic-button',
+            }}>
+            <MenuItem onClick={() => onSchemeSelected('klein')}>Klein</MenuItem>
+            <MenuItem onClick={() => onSchemeSelected('aura')}>Aura</MenuItem>
+            <MenuItem onClick={() => onSchemeSelected('solarized')}>Solarized</MenuItem>
+          </Menu>
+        </Paper>
       </Toolbar>
       <Loading />
     </AppBar>
