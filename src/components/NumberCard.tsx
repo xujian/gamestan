@@ -19,7 +19,8 @@ const NumberCard = ({
   extra
 }: NumberCardProps) => {
   return (
-    <Card sx={{p: 2.5 }} title={title} extra={extra}>
+    <Card className="number-card" sx={{p: 2.5}}
+      title={title} extra={extra}>
       <Grid container>
         <Grid item>
           <Typography variant='h4' color='inherit'>

@@ -15,7 +15,6 @@ const AppCard = forwardRef<HTMLDivElement, CardProps>(
         sx={{
           ...props.sx,
           border: props.border ? '1px solid' : 'none',
-          borderRadius: 4,
           borderColor: theme.palette.mode === 'dark'
             ? theme.palette.divider
             : theme.palette.grey,

@@ -8,7 +8,7 @@ const GameCard = ({
   game
 }: GameCardProps) => {
   return (
-    <Card sx={{ borderRadius: 4 }}>
+    <Card>
       <CardActionArea>
         <CardMedia
           component="img"
