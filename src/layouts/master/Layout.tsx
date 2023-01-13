@@ -20,8 +20,8 @@ const MasterLayout: React.FC = () => {
   return (
     <Box className="master-layout" sx={{
       display: 'grid',
-      'grid-template-rows': '64px auto 320px',
-      'grid-template-columns': `${navWidth}px auto`,
+      'grid-template-rows': '64px 1fr 320px',
+      'grid-template-columns': `${navWidth}px 1fr`,
       'grid-template-areas': 
         `'aside header'
         'aside main'

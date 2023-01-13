@@ -1,15 +1,31 @@
 import React, { useState } from 'react'
-import { AppBar, IconButton, InputBase, Menu, MenuItem, Paper, Toolbar, useMediaQuery, useTheme } from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { AppBar, IconButton, Menu, MenuItem,
+  Paper, Toolbar, useTheme,
+  PaperProps } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { changeColorMode, selectColorMode, changeScheme } from '../../themes/theme.slice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
 import LightModeIcon from '@mui/icons-material/LightMode'
 import DarkModeIcon from '@mui/icons-material/DarkMode'
 import AccountBoxIcon from '@mui/icons-material/AccountBox'
-import ColorLensIcon from '@mui/icons-material/ColorLens';
-import SearchIcon from '@mui/icons-material/Search'
+import ColorLensIcon from '@mui/icons-material/ColorLens'
 import { toggleAside } from './layout.slice'
-import Loading from './Loading';
+import Loading from './Loading'
+import Search from '../../components/Search'
+
+type VibrantPaperProps = {focused?: boolean} & PaperProps
+
+/**
+ * semi transparent paper with blur filter
+ */
+const VibrantPaper = styled(Paper)<VibrantPaperProps>(({focused}) => ({
+  display: 'flex',
+  border: `1px solid #ffffff11`,
+  borderColor: focused ? '#ffffff33' : '#ffffff11',
+  backgroundColor: '#33333333',
+  backdropFilter: 'saturate(120%) blur(20px)',
+}))
 
 const Header: React.FC = () => {
   const colorMode = useAppSelector(selectColorMode),
@@ -29,11 +45,12 @@ const Header: React.FC = () => {
     onSchemeSelected = (scheme: string) => {
       dispatch(changeScheme(scheme))
     }
+  const [searchFocused, setSearchFocued] = useState<boolean>(false)
 
   return (
     <AppBar className="header" component="header"
       color='transparent'
-      position='fixed'
+      position='static'
       elevation={0}
       sx={{
         display: 'flex',
@@ -62,38 +79,17 @@ const Header: React.FC = () => {
           onClick={() => dispatch(toggleAside())}>
           <MenuIcon />
         </IconButton>
-        <Paper
+        <VibrantPaper
           elevation={0}
-          variant="outlined"
-          sx={{
-            display: 'flex',
-            flexGrow: 1,
-            border: `1px solid ${theme.palette.divider}`,
-            backgroundColor: '#33333333',
-            backdropFilter: 'saturate(200%) blur(20px)',
-          }}>
-          <InputBase placeholder='Search games...'
-            inputProps={{'aria-label': 'Search games...'}}
-            sx={{
-              flexGrow: 1,
-              height: '40px',
-              mx: 2,
-              px: 1,
-            }} />
-          <IconButton type='button' aria-label='search'
-            color="inherit">
-            <SearchIcon />
-          </IconButton>
-        </Paper>
-        <Paper
+          focused={searchFocused}
+          sx={{flexGrow: 1}}>
+          <Search
+            onFocus={() => setSearchFocued(true)}
+            onBlur={() => setSearchFocued(false)} />
+        </VibrantPaper>
+        <VibrantPaper
           elevation={0}
-          sx={{
-            display: 'flex',
-            border: `1px solid ${theme.palette.divider}`,
-            backgroundColor: '#ffffff33',
-            backdropFilter: 'blur(20px)',
-            marginLeft: '1em'
-          }}>
+          sx={{marginLeft: '1em'}}>
           <IconButton
             color="inherit"
             aria-label="account">
@@ -124,7 +120,7 @@ const Header: React.FC = () => {
             <MenuItem onClick={() => onSchemeSelected('aura')}>Aura</MenuItem>
             <MenuItem onClick={() => onSchemeSelected('solarized')}>Solarized</MenuItem>
           </Menu>
-        </Paper>
+        </VibrantPaper>
       </Toolbar>
       <Loading />
     </AppBar>
