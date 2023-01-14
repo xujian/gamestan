@@ -1,9 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, KeyboardEvent } from 'react'
 import { Button, ButtonProps, Chip, IconButton,
   InputBase, Popover, PopoverProps, Stack, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { styled, useTheme } from '@mui/material/styles'
+import Results from './Results'
+import { useHttp } from '../contexts'
 
 const SearchButton = styled((props: ButtonProps) => (
   <Button
@@ -52,11 +54,7 @@ const SearchPopover = styled((props: PopoverProps) => (
   top: -2,
   transition: 'all .33s',
   '& .MuiPaper-root': {
-    padding: '1em 1em 1em 1em',
     width: 320,
-    border: 'solid 1px #ffffff33',
-    backgroundColor: '#00000033',
-    'backdrop-filter': 'blur(50px)'
   },
   '> .title': {
     fontSize: 12,
@@ -65,13 +63,16 @@ const SearchPopover = styled((props: PopoverProps) => (
 }))
 
 type SearchProps = {
-  onFocus: () => void
-  onBlur: () => void
+  onFocus?: () => void
+  onBlur?: () => void
+  onResults?: (data: Record<string, any>[]) => void
 }
 
 const Search: React.FC<SearchProps> = (props: SearchProps) => {
   const 
+    { onResults } = props,
     theme = useTheme(),
+    [keyword, setKeyword] = useState<string>(''),
     [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null),
     isOpen = Boolean(anchorEl),
     handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -80,6 +81,7 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
     handleClose = () => {
       setAnchorEl(null)
     },
+    { http } = useHttp(),
     platforms = [
       {name: 'pc', label: 'PC'},
       {name: 'playstation5', label: 'PS5'},
@@ -97,8 +99,19 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
         ? value.delete(name)
         : value.add(name)
       setSelectedPlatforms(value)
+    },
+    onSearchKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
+      if (event.key.toLowerCase() !== 'enter') {
+        return
+      }
+      http.get(`https://api.rawg.io/api/games?search=${keyword}`).then(rsp => {
+        const response = rsp as Record<string, any>
+        onResults && onResults(response.results)
+      })
+    },
+    onKeywordChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      setKeyword(event.target.value)
     }
-
   return (
     <>
       <IconButton type='button' aria-label='search'
@@ -112,8 +125,10 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
           height: '40px',
           px: 1,
         }}
-        onFocus={() => props.onFocus()}
-        onBlur={() => props.onBlur()} />
+        onChange={onKeywordChange}
+        onFocus={() => props.onFocus?.()}
+        onBlur={() => props.onBlur?.()}
+        onKeyUp={onSearchKeyUp} />
       <SearchButton
         id="demo-customized-button"
         aria-controls={isOpen ? 'demo-customized-menu' : undefined}

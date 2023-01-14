@@ -1,8 +1,9 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import { styled } from '@mui/material/styles'
 import { AppBar, IconButton, Menu, MenuItem,
   Paper, Toolbar, useTheme,
-  PaperProps } from '@mui/material'
+  PaperProps, 
+  Popper} from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { changeColorMode, selectColorMode, changeScheme } from '../../themes/theme.slice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
@@ -13,6 +14,7 @@ import ColorLensIcon from '@mui/icons-material/ColorLens'
 import { toggleAside } from './layout.slice'
 import Loading from './Loading'
 import Search from '../../components/Search'
+import Results from '../../components/Results'
 
 type VibrantPaperProps = {focused?: boolean} & PaperProps
 
@@ -45,7 +47,14 @@ const Header: React.FC = () => {
     onSchemeSelected = (scheme: string) => {
       dispatch(changeScheme(scheme))
     }
-  const [searchFocused, setSearchFocued] = useState<boolean>(false)
+  const [searchFocused, setSearchFocued] = useState<boolean>(false),
+    [searchResultsOpen, setSearchResultsOpen] = useState<boolean>(false),
+    [searchResults, setSearchResult] = useState<Record<string, any>[]>([])
+  const searchBar = useRef(null),
+  displaySearchResult = (data: Record<string, any>[]) => {
+    setSearchResultsOpen(true)
+    setSearchResult(data)
+  }
 
   return (
     <AppBar className="header" component="header"
@@ -80,12 +89,14 @@ const Header: React.FC = () => {
           <MenuIcon />
         </IconButton>
         <VibrantPaper
+          ref={searchBar}
           elevation={0}
           focused={searchFocused}
           sx={{flexGrow: 1}}>
           <Search
             onFocus={() => setSearchFocued(true)}
-            onBlur={() => setSearchFocued(false)} />
+            onBlur={() => setSearchFocued(false)}
+            onResults={displaySearchResult} />
         </VibrantPaper>
         <VibrantPaper
           elevation={0}
@@ -121,6 +132,16 @@ const Header: React.FC = () => {
             <MenuItem onClick={() => onSchemeSelected('solarized')}>Solarized</MenuItem>
           </Menu>
         </VibrantPaper>
+        <Popper open={searchResultsOpen}
+          placement="bottom-start"
+          className="search-result-popover"
+          anchorEl={searchBar.current}
+          sx={{
+            maxHeight: 480,
+            overflowY: 'scroll'
+          }}>
+          <Results data={searchResults} />
+        </Popper>
       </Toolbar>
       <Loading />
     </AppBar>
