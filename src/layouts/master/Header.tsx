@@ -3,7 +3,8 @@ import { styled } from '@mui/material/styles'
 import { AppBar, IconButton, Menu, MenuItem,
   Paper, Toolbar, useTheme,
   PaperProps, 
-  Popper} from '@mui/material'
+  Popper,
+  ClickAwayListener} from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 import { changeColorMode, selectColorMode, changeScheme } from '../../themes/theme.slice'
 import { useAppDispatch, useAppSelector } from '../../store/hooks'
@@ -132,16 +133,17 @@ const Header: React.FC = () => {
             <MenuItem onClick={() => onSchemeSelected('solarized')}>Solarized</MenuItem>
           </Menu>
         </VibrantPaper>
-        <Popper open={searchResultsOpen}
-          placement="bottom-start"
-          className="search-result-popover"
-          anchorEl={searchBar.current}
-          sx={{
-            maxHeight: 480,
-            overflowY: 'scroll'
-          }}>
-          <Results data={searchResults} />
-        </Popper>
+        <ClickAwayListener onClickAway={() => setSearchResultsOpen(false)}>
+          <Popper open={searchResultsOpen}
+            placement="bottom-start"
+            className="search-result-popover"
+            anchorEl={searchBar.current}
+            sx={{
+              p: 0
+            }}>
+            <Results data={searchResults} />
+          </Popper>
+        </ClickAwayListener>
       </Toolbar>
       <Loading />
     </AppBar>

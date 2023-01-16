@@ -7,7 +7,27 @@ const typography = (theme: ThemeOptions) => ({
   fontWeightBold: 600,
   h1: {
     fontWeight: 600,
-    fontSize: '2rem'
+    fontSize: '1rem'
+  },
+  h2: {
+    fontWeight: 600,
+    fontSize: '1rem'
+  },
+  h3: {
+    fontWeight: 600,
+    fontSize: '1rem'
+  },
+  h4: {
+    fontWeight: 600,
+    fontSize: '1rem'
+  },
+  h5: {
+    fontWeight: 600,
+    fontSize: '1rem'
+  },
+  h6: {
+    fontWeight: 600,
+    fontSize: '1rem'
   }
 })
 

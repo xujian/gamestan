@@ -22,7 +22,7 @@ const GamePage: React.FC = () => {
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       aspectRatio: '16/8',
-      maxWidth: 960,
+      maxWidth: 1280,
       display: 'flex',
     }
   return (

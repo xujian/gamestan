@@ -1,4 +1,4 @@
-export default function Card () {
+export default function MuiCard () {
   return {
     MuiCard: {
       styleOverrides: {

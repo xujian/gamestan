@@ -1,5 +1,7 @@
 import React from 'react'
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText, Typography } from '@mui/material'
+import { Avatar, List, ListItem, ListItemAvatar, 
+  ListItemButton, ListItemText, Typography } from '@mui/material'
+import { NavLink } from 'react-router-dom'
 
 type ResultshProps = {
   data: Record<string, any>[]
@@ -11,17 +13,26 @@ const Results: React.FC<ResultshProps> = (props: ResultshProps) => {
     data = []
   }
   return (
-    <List sx={{
-      width: '600px',
-      p:0,
-    }}>
+    <List 
+      className='scrollable'
+      sx={{
+        width: '600px',
+        maxHeight: 480,
+        overflowY: 'scroll',
+        '& .MuiAvatar-root': {
+          borderRadius: 12
+        }
+      }}>
       {
         data.length
           ? data.map((game) => (
             <>
-              <ListItem alignItems="flex-start" sx={{p:0}}>
+              <ListItemButton alignItems="flex-start" sx={{py:0}}
+                component={NavLink}
+                to={`/games/${game.id}`}>
                 <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src={game.background_image} />
+                  <Avatar alt="Remy Sharp" src={game.background_image}
+                    sx={{borderRadius: 10}} />
                 </ListItemAvatar>
                 <ListItemText
                   primary={game.name}
@@ -29,15 +40,15 @@ const Results: React.FC<ResultshProps> = (props: ResultshProps) => {
                     <React.Fragment>
                       <Typography
                         sx={{ display: 'inline' }}
+                        color="text.info"
                         component="span"
                         variant="body2"
-                        color="text.primary"
                       >
                         {game.released}
                       </Typography>
                     </React.Fragment>
                   }/>
-              </ListItem>
+              </ListItemButton>
             </>
           ))
         : (

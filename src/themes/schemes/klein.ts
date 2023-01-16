@@ -12,6 +12,9 @@ const theme: SchemeBuilder = (mode: ColorMode) => ({
       primary: mode === 'dark'
         ? '#fff'
         : '#666666',
+      info: mode === 'dark'
+      ? '#cccccc88'
+      : '#666666',
     },
     background: {
       paper: mode === 'dark'

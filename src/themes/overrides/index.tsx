@@ -1,8 +1,9 @@
 import { ThemeOptions } from '@mui/material'
 import merge from 'lodash/merge'
 import MuiBUttonGroup from './ButtonGroup'
-import Card from './Card'
+import MuiCard from './Card'
 import MuiContainer from './Container'
+import MuiList from './List'
 import MuiMenu from './Menu'
 import MuiPopover from './Popover'
 import MuiPopper from './Popper'
@@ -10,10 +11,11 @@ import MuiPopper from './Popper'
 export default function componentOverrides (theme: ThemeOptions) {
   return merge(
     MuiContainer(),
-    Card(),
+    MuiCard(),
     MuiMenu(),
     MuiBUttonGroup(),
     MuiPopover(),
     MuiPopper(),
+    MuiList(),
   )
 }
