@@ -25,7 +25,7 @@ const SearchButton = styled((props: ButtonProps) => (
   '&:hover': {
     backgroundColor: '#00000033',
     borderColor: '#ffffff33',
-    'backdrop-filter': 'blur(50px)'
+    backdropFilter: 'blur(50px)'
   },
   '&:active': {
     backgroundColor: '#000',

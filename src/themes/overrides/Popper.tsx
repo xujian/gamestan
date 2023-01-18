@@ -8,7 +8,10 @@ export default function MuiPopper () {
           backdropFilter: 'saturate(120%) blur(20px)',
           border: 'solid 1px #ffffff33',
           borderRadius: 20,
-          overflow: 'hidden'
+          overflow: 'hidden',
+          '&.focused': {
+            borderColor: '#ffffff33',
+          }
         },
       }
     }

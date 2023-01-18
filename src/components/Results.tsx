@@ -20,7 +20,7 @@ const Results: React.FC<ResultshProps> = (props: ResultshProps) => {
         maxHeight: 480,
         overflowY: 'scroll',
         '& .MuiAvatar-root': {
-          borderRadius: 12
+          borderRadius: '10px'
         }
       }}>
       {

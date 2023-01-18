@@ -17,15 +17,12 @@ import Loading from './Loading'
 import Search from '../../components/Search'
 import Results from '../../components/Results'
 
-type VibrantPaperProps = {focused?: boolean} & PaperProps
-
 /**
  * semi transparent paper with blur filter
  */
-const VibrantPaper = styled(Paper)<VibrantPaperProps>(({focused}) => ({
+const VibrantPaper = styled(Paper)<PaperProps>(() => ({
   display: 'flex',
   border: `1px solid #ffffff11`,
-  borderColor: focused ? '#ffffff33' : '#ffffff11',
   backgroundColor: '#33333333',
   backdropFilter: 'saturate(120%) blur(20px)',
 }))
@@ -48,7 +45,7 @@ const Header: React.FC = () => {
     onSchemeSelected = (scheme: string) => {
       dispatch(changeScheme(scheme))
     }
-  const [searchFocused, setSearchFocued] = useState<boolean>(false),
+  const [searchFocused, setSearchFocused] = useState<boolean>(false),
     [searchResultsOpen, setSearchResultsOpen] = useState<boolean>(false),
     [searchResults, setSearchResult] = useState<Record<string, any>[]>([])
   const searchBar = useRef(null),
@@ -90,13 +87,13 @@ const Header: React.FC = () => {
           <MenuIcon />
         </IconButton>
         <VibrantPaper
+          className={searchFocused ? 'focused': ''}
           ref={searchBar}
           elevation={0}
-          focused={searchFocused}
           sx={{flexGrow: 1}}>
           <Search
-            onFocus={() => setSearchFocued(true)}
-            onBlur={() => setSearchFocued(false)}
+            onFocus={() => setSearchFocused(true)}
+            onBlur={() => setSearchFocused(false)}
             onResults={displaySearchResult} />
         </VibrantPaper>
         <VibrantPaper

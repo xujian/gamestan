@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { Box } from '@mui/material'
+import { Box, Chip, Stack } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useBus, useHttp } from '../contexts'
+import { Container } from '@mui/system'
 
 const GamePage: React.FC = () => {
   const { id } = useParams(),
@@ -21,9 +22,19 @@ const GamePage: React.FC = () => {
       width: '100vw',
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center center',
       aspectRatio: '16/8',
       maxWidth: 1280,
       display: 'flex',
+      alignItems: 'flex-end',
+      p: 1,
+      '& h1': {
+        fontSize: 60,
+      },
+      borderRadius: {
+        lg: '20px',
+        sm: 0,
+      }
     }
   return (
     <>
@@ -34,6 +45,14 @@ const GamePage: React.FC = () => {
         }}>
         <h1>{game.name}</h1>
       </Box>
+      {game.platforms && (
+        <Stack direction="row" spacing={1} className="platforms"
+          sx={{py: 2}}>
+          {game.platforms.map(({platform}: any) => (
+            <Chip color="secondary" key={platform.slug} label={platform.name}></Chip>
+          ))}
+        </Stack>
+      )}
       <article className="game-page">
       </article>
     </>

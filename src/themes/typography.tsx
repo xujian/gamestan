@@ -7,27 +7,39 @@ const typography = (theme: ThemeOptions) => ({
   fontWeightBold: 600,
   h1: {
     fontWeight: 600,
-    fontSize: '1rem'
+    fontSize: '1rem',
+    margin: 0,
+    lineHeight: '1em',
   },
   h2: {
     fontWeight: 600,
-    fontSize: '1rem'
+    fontSize: '1rem',
+    margin: 0,
+    lineHeight: '1em',
   },
   h3: {
     fontWeight: 600,
-    fontSize: '1rem'
+    fontSize: '1rem',
+    margin: 0,
+    lineHeight: '1em',
   },
   h4: {
     fontWeight: 600,
-    fontSize: '1rem'
+    fontSize: '1rem',
+    margin: 0,
+    lineHeight: '1em',
   },
   h5: {
     fontWeight: 600,
-    fontSize: '1rem'
+    fontSize: '1rem',
+    margin: 0,
+    lineHeight: '1em',
   },
   h6: {
     fontWeight: 600,
-    fontSize: '1rem'
+    fontSize: '1rem',
+    margin: 0,
+    lineHeight: '1em',
   }
 })
 
