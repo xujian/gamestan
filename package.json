@@ -1,15 +1,24 @@
 {
   "name": "gamestan-root",
+  "private": true,
+  "workspaces":[
+    "packages/*"
+  ],
   "scripts": {
     "bootstrap": "lerna bootstrap",
     "start": "lerna run start --stream",
     "build": "lerna run build"
   },
   "dependencies": {
+    "axios": "^1.2.0",
     "typescript": "^4.7.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.14.191",
     "@typescript-eslint/parser": "^5.48.2",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "lerna": "^6.4.1"
   }
 }
