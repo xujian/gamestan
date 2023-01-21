@@ -1,4 +1,5 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { ChannelConfig } from '.'
 
 export type RequestInterceptor = (config: AxiosRequestConfig) => AxiosRequestConfig
 
@@ -21,7 +22,7 @@ export interface HttpClient {
 export interface HttpChannel {
   name: string,
   match: (url: string) => boolean,
-  config: AxiosRequestConfig,
+  config: ChannelConfig,
   requestInterceptor?: RequestInterceptor,
   responseInterceptor?: ResponseInterceptor,
 }

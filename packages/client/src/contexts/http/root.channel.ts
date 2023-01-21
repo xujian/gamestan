@@ -1,14 +1,15 @@
 import { AxiosRequestConfig, AxiosResponse } from 'axios'
-import { HttpChannel, HttpResponse, RequestInterceptor, ResponseInterceptor } from './types'
+import { ChannelConfig } from '.'
+import { HttpChannel, RequestInterceptor, ResponseInterceptor } from './types'
 
 const match = (url: string) => true
 
-const config: AxiosRequestConfig = {
+const config: ChannelConfig = {
   baseURL: '/',
   withCredentials: false,
   params: {
     key: process.env.REACT_APP_RAWG_KEY,
-  },
+  }
 }
 
 const requestInterceptor: RequestInterceptor = 

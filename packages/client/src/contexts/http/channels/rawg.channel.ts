@@ -1,11 +1,13 @@
-import { AxiosRequestConfig, AxiosResponse } from 'axios'
+import { AxiosHeaders, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse } from 'axios'
 import { HttpChannel, RequestInterceptor, ResponseInterceptor } from '../types'
 import merge from 'lodash/merge'
+import { ChannelConfig } from '..'
 
 const match = (url: string) => url.match(/rawg\.io/) !== null
 
-const config: AxiosRequestConfig = {
+const config: ChannelConfig = {
   baseURL: '/',
+  headers: AxiosHeaders.from() as AxiosRequestHeaders
 }
 
 const requestInterceptor: RequestInterceptor = 

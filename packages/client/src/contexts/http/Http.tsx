@@ -6,7 +6,6 @@ import rootConfig from './config'
 import { HttpChannel, HttpClient, HttpResponse } from './types'
 import rootChannel from './root.channel'
 import merge from 'lodash/merge'
-import channels from './channels'
 
 const HttpContext = createContext<AxiosInstance | null>(null)
 const coreChannels: HttpChannel[] = [rootChannel]
@@ -28,7 +27,7 @@ export const HttpProvider: React.FC<{
 }> = ({
   children,
 }) => {
-  let config: AxiosRequestConfig = rootConfig
+  let config: AxiosRequestConfig = rootConfig as AxiosRequestConfig
 
   coreChannels.forEach(channel => {
     config = merge(config, channel.config)
@@ -52,6 +51,26 @@ export const HttpProvider: React.FC<{
   )
 }
 
+export type HttpMethod = 'get' | 'post' | 'delete' | 'put'
+
+export type ChannelConfig = {
+  baseURL?: string,
+  method?: HttpMethod,
+  withCredentials?: boolean,
+  params?: Record<string, any>,
+  data?: Record<string, any>,
+  headers?: Record<string, any>,
+}
+
+export type HttpConfig = {
+  url: string,
+  method?: HttpMethod,
+  withCredentials?: boolean,
+  params?: Record<string, any>,
+  data?: Record<string, any>,
+  headers?: Record<string, any>,
+}
+
 /**
  * 
  * @param url 
@@ -66,7 +85,7 @@ export const useHttp = () => {
     return contextInstance
   }, [contextInstance])
 
-  const request = async (config: AxiosRequestConfig) => {
+  const request = async (config: HttpConfig) => {
     return new Promise<HttpResponse>((resolve, reject) => {
       instance.request(config).then((rsp: AxiosResponse<HttpResponse>) => {
         const status = rsp.status
