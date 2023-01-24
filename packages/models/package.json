@@ -1,0 +1,6 @@
+{
+  "name": "@gamestan/models",
+  "version": "1.0.0",
+  "module": "src/index.ts",
+  "license": "MIT"
+}
