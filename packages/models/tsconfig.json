@@ -1,9 +1,24 @@
 {
   "compilerOptions": {
+    "target": "es2015",
     "baseUrl": ".",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "declaration": true,
+    "outDir": "dist",
+    "declarationDir": "dist",
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "src/**/*.ts"
+  ],
+  "exclude": [
+    "dist",
+    "node_modules",
+    "../../node_modules"
+  ],
+  "types": [
+    "dist/index.d.js"
   ]
 }

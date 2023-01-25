@@ -11,7 +11,7 @@ export class GamesController {
     @Req() req,
     @Res() res,
   ) {
-    this.service.findAll().then((data: Game) => {
+    this.service.fetchAll().then((data: Game[]) => {
 
     })
   }

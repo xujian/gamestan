@@ -1,3 +1,7 @@
+
+/**
+ * Data model for game
+ */
 export interface Game {
   id: number
   ageRatings: number[]
