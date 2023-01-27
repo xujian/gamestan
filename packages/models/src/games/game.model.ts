@@ -1,24 +1,22 @@
+import { Franchise } from './franchise.model'
+import { Image } from './image.model'
+import { Platform } from './platform.model'
 
 /**
  * Data model for game
  */
 export interface Game {
   id: number
-  ageRatings: number[]
   aggregatedRating: number
   aggregatedRatingCount: number
-  alternativeNames: number[]
-  artworks: number[]
+  artworks: Image[]
   bundles: number[]
   category: number
-  collection: number
-  cover: number
+  cover: Image
   createdAt: number
   dlcs: number[]
-  externalGames: number[]
   firstReleaseDate: number
-  follows: number
-  franchises: number[]
+  franchises: Franchise[]
   gameEngines: number[]
   gameModes: number[]
   genres: number[]
@@ -26,12 +24,11 @@ export interface Game {
   involvedCompanies: number[]
   keywords: number[]
   name: string
-  platforms: number[]
-  playerPerspectives: number[]
+  platforms: Platform[]
   rating: number
   ratingCount: number
   releaseDates: number[]
-  screenshots: number[]
+  screenshots: Image[]
   similarGames: number[]
   slug: string
   storyline: string

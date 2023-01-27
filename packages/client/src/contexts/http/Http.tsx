@@ -14,7 +14,7 @@ const coreChannels: HttpChannel[] = [rootChannel]
  * apply channel to axios instance
  */
 const applyChannel = (instance: AxiosInstance, channel: HttpChannel) => {
-  instance.interceptors.request.use(channel.requestInterceptor)
+  // instance.interceptors.request.use(channel.requestInterceptor)
   instance.interceptors.response.use(channel.responseInterceptor)
 }
 
@@ -101,25 +101,29 @@ export const useHttp = () => {
   }
 
   const http: HttpClient = {
-    get (url: string) {
-      return request({
+    async get<T> (url: string) {
+      const data = await request({
         url, method: 'get'
       })
+      return data as T
     },
-    post (url: string, data: Record<string, any>) {
-      return request({
-        url, data, method: 'post'
+    async post<T> (url: string, body: Record<string, any>) {
+      const data = await request({
+        url, data: body, method: 'post'
       })
+      return data as T
     },
-    put (url: string, data: Record<string, any>) {
-      return request({
-        url, data, method: 'put'
+    async put<T> (url: string, body: Record<string, any>) {
+      const data = await request({
+        url, data: body, method: 'put'
       })
+      return data as T
     },
-    delete (url: string) {
-      return request({
+    async delete<T> (url: string) {
+      const data = await request({
         url, method: 'delete'
       })
+      return data as T
     },
   }
 

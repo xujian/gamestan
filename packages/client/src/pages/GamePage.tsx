@@ -2,18 +2,19 @@ import React, { useEffect, useState } from 'react'
 import { Box, Chip, Stack } from '@mui/material'
 import { useParams } from 'react-router-dom'
 import { useBus, useHttp } from '../contexts'
-import { Container } from '@mui/system'
+import { Game, Platform } from '@gamestan/models'
 
 const GamePage: React.FC = () => {
   const { id } = useParams(),
     { http } = useHttp(),
-    [game, setGame] = useState<Record<string, any>>({}),
+    [game, setGame] = useState<Game | null>(null),
     bus = useBus()
 
     useEffect(() => {
       bus.emit('loading.start')
-      http.get(`https://api.rawg.io/api/games/${id}`).then(rsp => {
-        setGame(rsp)
+      http.get<Game>(`/api/games/${id}`).then(game => {
+        console.log('dddd', game)
+        setGame(game)
       })
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -36,27 +37,29 @@ const GamePage: React.FC = () => {
         sm: 0,
       }
     }
-  return (
-    <>
-      <Box className="hreo"
-        sx={{
-          ...heroSx,
-          backgroundImage: `url(${game.background_image})`,
-        }}>
-        <h1>{game.name}</h1>
-      </Box>
-      {game.platforms && (
-        <Stack direction="row" spacing={1} className="platforms"
-          sx={{py: 2}}>
-          {game.platforms.map(({platform}: any) => (
-            <Chip color="secondary" key={platform.slug} label={platform.name}></Chip>
-          ))}
-        </Stack>
-      )}
-      <article className="game-page">
-      </article>
-    </>
-  )
+  return game 
+    ? (
+      <>
+        <Box className="hreo"
+          sx={{
+            ...heroSx,
+            backgroundImage: `url(${game.screenshots[0].url.replace('thumb', 'screenshot_big_2x')})`,
+          }}>
+          <h1>{game.name}</h1>
+        </Box>
+        {game.platforms && (
+          <Stack direction="row" spacing={1} className="platforms"
+            sx={{py: 2}}>
+            {game.platforms.map((platform: Platform) => (
+              <Chip color="secondary" key={platform.slug} label={platform.name}></Chip>
+            ))}
+          </Stack>
+        )}
+        <article className="game-page">
+        </article>
+      </>
+    )
+    : (<>Wait...</>)
 }
 
 export default GamePage

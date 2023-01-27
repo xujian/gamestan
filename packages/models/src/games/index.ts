@@ -1,1 +1,5 @@
 export * from './game.model'
+export * from './image.model'
+export * from './platform.model'
+export * from './franchise.model'
+export * from './genre.model'

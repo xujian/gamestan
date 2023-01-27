@@ -13,10 +13,10 @@ export type HttpResponse =
  * Http client based on Axios
  */
 export interface HttpClient {
-  get (path: string): Promise<HttpResponse>,
-  post (path: string, body: Record<string, any>): Promise<HttpResponse>,
-  put (path: string, body: Record<string, any>): Promise<HttpResponse>,
-  delete (path: string): Promise<HttpResponse>,
+  get<T> (path: string): Promise<T>,
+  post<T> (path: string, body: Record<string, any>): Promise<T>,
+  put<T> (path: string, body: Record<string, any>): Promise<T>,
+  delete<T> (path: string): Promise<T>,
 }
 
 export interface HttpChannel {

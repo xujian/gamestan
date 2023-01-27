@@ -1,3 +1,4 @@
+import { Game, Genre } from '@gamestan/models'
 import { Grid, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -8,19 +9,19 @@ import { useHttp } from '../contexts/http/Http'
 
 const HomePage: React.FC = () => {
   const { http } = useHttp()
-  const [games, setGames] = useState<Record<string, any>>({results:[]})
-  const [genres, setGenres] = useState<Record<string, any>>({results:[]})
+  const [games, setGames] = useState<Game[]>([])
+  const [genres, setGenres] = useState<Genre[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const bus = useBus()
 
   useEffect(() => {
     bus.emit('loading.start')
-    http.get('https://api.rawg.io/api/games').then(rsp => {
-      setGames(rsp)
+    http.get<Game[]>('/api/games').then(data => {
+      setGames(data)
       // bus.emit('loading.stop')
     })
-    http.get('https://api.rawg.io/api/genres').then(rsp => {
-      setGenres(rsp)
+    http.get<Genre[]>('/api/genres').then(data => {
+      setGenres(data)
       setIsLoading(false)
       // bus.emit('loading.stop')
     })
@@ -33,7 +34,7 @@ const HomePage: React.FC = () => {
         <Grid item xs={12} sx={{ mb: -2.25, mt: 2 }}>
           <Typography variant="h5">Genres</Typography>
         </Grid>
-        {genres.results.slice(0, 4).map((genre: any) => (
+        {genres.slice(0, 4).map((genre: any) => (
           <Grid key={genre.id} item xs={12} sm={6} md={4} lg={3}>
             <NumberCard title={genre.name} count={genre.games_count} />
           </Grid>
@@ -43,8 +44,8 @@ const HomePage: React.FC = () => {
         <Grid item xs={12} sx={{ mb: -2.25, mt: 4 }}>
           <Typography variant="h5">Top Games</Typography>
         </Grid>
-        {games.results.map((game: any) => (
-          <Grid item key={game.id} xs={12} sm={6} md={4} lg={3}>
+        {games.map((game: any) => (
+          <Grid item key={game.id} xs={12} sm={6} md={3} lg={3}>
             <Link to={`/games/${game.id}`}>
               <GameCard game={game} />
             </Link>

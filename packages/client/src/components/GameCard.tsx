@@ -1,7 +1,8 @@
 import React, { Card, CardActionArea, CardContent, CardMedia, Rating, Typography } from '@mui/material'
+import { Game } from '@gamestan/models'
 
 type GameCardProps = {
-  game: any
+  game: Game
 }
 
 const GameCard = ({
@@ -9,21 +10,20 @@ const GameCard = ({
 }: GameCardProps) => {
   return (
     <Card>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="140"
-          image={game.background_image}
-          alt="green iguana"
-        />
-        <CardContent>
-          <Typography variant="h6" component="h6"
-            sx={{fontSize: 14}}>
-            {game.name}
-          </Typography>
-          <Rating name="disabled" value={game.rating}
-            precision={0.5} size="small" readOnly />
-        </CardContent>
+      <CardActionArea sx={{ display: 'flex', flexDirection: 'row'}}>
+      { game.cover && (<CardMedia
+        sx={{ width: '50%' }}
+        component="img"
+        image={game.cover.url.replace('t_thumb', 't_cover_big')}
+      />)}
+      <CardContent sx={{ width: '50%'}}>
+        <Typography variant="h6" component="h6"
+          sx={{fontSize: 14, textDecoration: 'none'}}>
+          {game.name}
+        </Typography>
+        <Rating name="disabled" value={game.rating}
+          precision={0.5} size="small" readOnly />
+      </CardContent>
       </CardActionArea>
     </Card>
   )
