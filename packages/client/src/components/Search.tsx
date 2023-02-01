@@ -4,7 +4,7 @@ import { Button, ButtonProps, Chip, IconButton,
 import SearchIcon from '@mui/icons-material/Search'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { styled, useTheme } from '@mui/material/styles'
-import Results from './Results'
+import { useQuery } from '@tanstack/react-query'
 import { useHttp } from '../contexts'
 
 const SearchButton = styled((props: ButtonProps) => (
@@ -104,7 +104,7 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
       if (event.key.toLowerCase() !== 'enter') {
         return
       }
-      http.get(`https://api.rawg.io/api/games?search=${keyword}`).then(rsp => {
+      http.get(`/api/search/${keyword}`).then(rsp => {
         const response = rsp as Record<string, any>
         onResults && onResults(response.results)
       })

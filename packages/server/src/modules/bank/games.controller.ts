@@ -31,6 +31,7 @@ export class GamesController {
     ].join(' ')
     const data = await this.axios.post<string, Game[]>('/games', body),
       games = data.map(d => this.format(d))
+    console.log('/games------')
     return games
   }
 
@@ -45,6 +46,22 @@ export class GamesController {
       ].join(' ')
     const [game] = await this.axios.post<string, Game[]>('/games', body)
     return game
+  }
+
+  @Get('/search/:keyword')
+  async search (
+    @Param('keyord') keyword: string
+  ) {
+    const search = `search ${keyword};`
+    const body = [
+      'fields id, name, cover.*, platforms.*',
+      search,
+      'sort rating desc;',
+      'limit 40;'
+    ].join(' ')
+    const data = await this.axios.post<string, Game[]>('/games', body),
+      games = data.map(d => this.format(d))
+    return games
   }
 
 
