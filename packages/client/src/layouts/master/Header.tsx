@@ -16,6 +16,7 @@ import { toggleAside } from './layout.slice'
 import Loading from './Loading'
 import Search from '../../components/Search'
 import Results from '../../components/Results'
+import { Game } from '@gamestan/models'
 
 /**
  * semi transparent paper with blur filter
@@ -47,9 +48,9 @@ const Header: React.FC = () => {
     }
   const [searchFocused, setSearchFocused] = useState<boolean>(false),
     [searchResultsOpen, setSearchResultsOpen] = useState<boolean>(false),
-    [searchResults, setSearchResult] = useState<Record<string, any>[]>([])
+    [searchResults, setSearchResult] = useState<Game[]>([])
   const searchBar = useRef(null),
-  displaySearchResult = (data: Record<string, any>[]) => {
+  displaySearchResult = (data: Game[]) => {
     setSearchResultsOpen(true)
     setSearchResult(data)
   }

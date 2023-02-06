@@ -3,7 +3,7 @@ import axios, { AxiosInstance,
   AxiosRequestConfig,
   AxiosResponse } from 'axios'
 import rootConfig from './config'
-import { HttpChannel, HttpClient, HttpResponse } from './types'
+import { HttpBody, HttpChannel, HttpClient, HttpParams, HttpResponse } from './types'
 import rootChannel from './root.channel'
 import merge from 'lodash/merge'
 
@@ -67,7 +67,7 @@ export type HttpConfig = {
   method?: HttpMethod,
   withCredentials?: boolean,
   params?: Record<string, any>,
-  data?: Record<string, any>,
+  data?: Record<string, any> | string,
   headers?: Record<string, any>,
 }
 
@@ -101,19 +101,19 @@ export const useHttp = () => {
   }
 
   const http: HttpClient = {
-    async get<T> (url: string) {
+    async get<T> (url: string, params?: HttpParams) {
       const data = await request({
-        url, method: 'get'
+        url, method: 'get', params,
       })
       return data as T
     },
-    async post<T> (url: string, body: Record<string, any>) {
+    async post<T> (url: string, body: HttpBody) {
       const data = await request({
         url, data: body, method: 'post'
       })
       return data as T
     },
-    async put<T> (url: string, body: Record<string, any>) {
+    async put<T> (url: string, body: HttpBody) {
       const data = await request({
         url, data: body, method: 'put'
       })

@@ -1,10 +1,20 @@
 import React from 'react'
-import { Avatar, List, ListItem, ListItemAvatar, 
+import { Avatar, Chip, List, ListItem, ListItemAvatar, 
   ListItemButton, ListItemText, Typography } from '@mui/material'
 import { NavLink } from 'react-router-dom'
+import * as dayjs from 'dayjs'
+import { Game } from '@gamestan/models'
+import GameCover from './GameCover'
+import { platforms } from '../consts'
+import PlatformsChips from './PlatformChips'
 
 type ResultshProps = {
-  data: Record<string, any>[]
+  data: Game[]
+}
+
+const formatDate = (unix: number) => {
+  const d = dayjs.unix(unix)
+  return d.format('YYYY')
 }
 
 const Results: React.FC<ResultshProps> = (props: ResultshProps) => {
@@ -21,6 +31,10 @@ const Results: React.FC<ResultshProps> = (props: ResultshProps) => {
         overflowY: 'scroll',
         '& .MuiAvatar-root': {
           borderRadius: '10px'
+        },
+        '& .date': {
+          color: '#999',
+          fontSize: 11
         }
       }}>
       {
@@ -31,23 +45,25 @@ const Results: React.FC<ResultshProps> = (props: ResultshProps) => {
                 component={NavLink}
                 to={`/games/${game.id}`}>
                 <ListItemAvatar>
-                  <Avatar alt="Remy Sharp" src={game.background_image}
-                    sx={{borderRadius: 10}} />
+                  <GameCover game={game} size="tn" rounded />
                 </ListItemAvatar>
                 <ListItemText
-                  primary={game.name}
-                  secondary={
-                    <React.Fragment>
-                      <Typography
-                        sx={{ display: 'inline' }}
-                        color="text.info"
-                        component="span"
-                        variant="body2"
-                      >
-                        {game.released}
+                  primary={
+                    <>
+                      <Typography sx={{
+                        display: 'inline',
+                        fontSize: 12,
+                        marginRight: '1em'
+                      }}>{game.name}</Typography>
+                      <Typography className="date" component="span">
+                        {formatDate(game.firstReleaseDate)}
                       </Typography>
-                    </React.Fragment>
-                  }/>
+                    </>
+                  }
+                  secondary={
+                    <PlatformsChips data={game.platforms.map(p => p.id)} />
+                  }>
+                </ListItemText>
               </ListItemButton>
             </>
           ))

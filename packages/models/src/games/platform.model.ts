@@ -5,6 +5,7 @@
 export interface Platform {
   id: number,
   name: string,
-  slug: string,
-  games: number[],
+  slug?: string,
+  games?: number[],
+  level?: number
 }

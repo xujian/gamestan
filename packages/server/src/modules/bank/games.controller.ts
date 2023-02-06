@@ -1,4 +1,4 @@
-import { Controller, Get, Res, Req, Param, HttpStatus } from '@nestjs/common'
+import { Controller, Get, Res, Req, Param, HttpStatus, Query } from '@nestjs/common'
 import Axios, { AxiosInstance, AxiosResponse } from 'axios'
 import { Game, Genre } from '@gamestan/models'
 
@@ -30,8 +30,8 @@ export class GamesController {
       'limit 40;'
     ].join(' ')
     const data = await this.axios.post<string, Game[]>('/games', body),
-      games = data.map(d => this.format(d))
-    console.log('/games------')
+      games = data.map(d => this.format<Game>(d))
+        .sort((a, b) => a.firstReleaseDate - b.firstReleaseDate)
     return games
   }
 
@@ -50,17 +50,20 @@ export class GamesController {
 
   @Get('/search/:keyword')
   async search (
-    @Param('keyord') keyword: string
+    @Param('keyword') keyword: string,
+    @Query('platforms') platforms: string
   ) {
-    const search = `search ${keyword};`
+    const search = `search "${keyword}";`
     const body = [
-      'fields id, name, cover.*, platforms.*',
+      'fields *, cover.*, platforms.*;',
       search,
-      'sort rating desc;',
+      platforms && `where platforms=(${platforms});`,
       'limit 40;'
     ].join(' ')
+    // console.log('/search/', keyword, platforms, body)
     const data = await this.axios.post<string, Game[]>('/games', body),
-      games = data.map(d => this.format(d))
+      games = data.map(d => this.format<Game>(d))
+    games.sort((a, b) => b.firstReleaseDate - a.firstReleaseDate)
     return games
   }
 

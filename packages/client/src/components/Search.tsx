@@ -6,6 +6,8 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { styled, useTheme } from '@mui/material/styles'
 import { useQuery } from '@tanstack/react-query'
 import { useHttp } from '../contexts'
+import { Game } from '@gamestan/models'
+import { platforms } from '../consts'
 
 const SearchButton = styled((props: ButtonProps) => (
   <Button
@@ -65,7 +67,7 @@ const SearchPopover = styled((props: PopoverProps) => (
 type SearchProps = {
   onFocus?: () => void
   onBlur?: () => void
-  onResults?: (data: Record<string, any>[]) => void
+  onResults?: (data: Game[]) => void
 }
 
 const Search: React.FC<SearchProps> = (props: SearchProps) => {
@@ -81,33 +83,28 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
     handleClose = () => {
       setAnchorEl(null)
     },
-    { http } = useHttp(),
-    platforms = [
-      {name: 'pc', label: 'PC'},
-      {name: 'playstation5', label: 'PS5'},
-      {name: 'playstation4', label: 'PS4'},
-      {name: 'xbox-one', label: 'XBox One'},
-      {name: 'xbox-series-x', label: 'XBox Series X'},
-      {name: 'nintendo-switch', label: 'Switch'},
-      {name: '-', label: '...'},
-    ],
+    { http } = useHttp()
+  const platformsForSearch = platforms.filter(p => p.level === 0),
     [selectedPlatforms, setSelectedPlatforms] =
-      useState<Set<string>>(new Set<string>()),
-    tooglePlatform = (name: string) => {
-      const value = new Set<string>(selectedPlatforms)
-      value.has(name)
-        ? value.delete(name)
-        : value.add(name)
+      useState<Set<number>>(new Set<number>()),
+    tooglePlatform = (id: number) => {
+      const value = new Set<number>(selectedPlatforms)
+      value.has(id)
+        ? value.delete(id)
+        : value.add(id)
       setSelectedPlatforms(value)
+    },
+    params = { platforms: Array.from(selectedPlatforms).join(',')},
+    search = (keyword: string) => {
+      http.get<Game[]>(`/api/search/${keyword}`, params).then(games => {
+        onResults && onResults(games)
+      })
     },
     onSearchKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
       if (event.key.toLowerCase() !== 'enter') {
         return
       }
-      http.get(`/api/search/${keyword}`).then(rsp => {
-        const response = rsp as Record<string, any>
-        onResults && onResults(response.results)
-      })
+      search(keyword)
     },
     onKeywordChange = (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
       setKeyword(event.target.value)
@@ -152,16 +149,16 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
             sx={{
               flexWrap: 'wrap',
             }}>
-            {platforms.map(p => (
-              <Chip key={p.name} label={p.label}
+            {platformsForSearch.map(p => (
+              <Chip key={p.id} label={p.name}
                 size="small"
                 color="secondary"
                 variant={
-                  selectedPlatforms.has(p.name)
+                  selectedPlatforms.has(p.id)
                     ? 'filled'
                     : 'outlined'
                   }
-                onClick={() => tooglePlatform(p.name)}
+                onClick={() => tooglePlatform(p.id)}
                 sx={{
                   cursor: 'pointer',
                   mr: 1,
