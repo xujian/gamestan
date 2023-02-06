@@ -1,6 +1,6 @@
 import React, { useState, KeyboardEvent } from 'react'
-import { Button, ButtonProps, Chip, IconButton,
-  InputBase, Popover, PopoverProps, Stack, Typography } from '@mui/material'
+import { Button, ButtonProps, Chip, FormControlLabel, IconButton,
+  InputBase, Popover, PopoverProps, Stack, Switch, Typography } from '@mui/material'
 import SearchIcon from '@mui/icons-material/Search'
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown'
 import { styled, useTheme } from '@mui/material/styles'
@@ -94,7 +94,14 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
         : value.add(id)
       setSelectedPlatforms(value)
     },
-    params = { platforms: Array.from(selectedPlatforms).join(',')},
+    [includesDlcs, setIncludesDlcs] = useState<boolean>(true),
+    handleIncludesDlcsChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setIncludesDlcs(event.target.checked)
+    },
+    params = {
+      ...selectedPlatforms && {platforms: Array.from(selectedPlatforms).join(',')},
+      ...includesDlcs && {dlc: '1'}
+    },
     search = (keyword: string) => {
       http.get<Game[]>(`/api/search/${keyword}`, params).then(games => {
         onResults && onResults(games)
@@ -169,6 +176,13 @@ const Search: React.FC<SearchProps> = (props: SearchProps) => {
                 }} />
             ))}
           </Stack>
+          <Typography className="title">
+            Options
+          </Typography>
+          <FormControlLabel label="include DLCs" control={
+            <Switch checked={includesDlcs} onChange={handleIncludesDlcsChange}
+              size="small" color="secondary" />
+          } />
         </SearchPopover>
     </>
   )

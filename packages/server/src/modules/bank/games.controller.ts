@@ -51,13 +51,19 @@ export class GamesController {
   @Get('/search/:keyword')
   async search (
     @Param('keyword') keyword: string,
-    @Query('platforms') platforms: string
+    @Query('platforms') platforms: string,
+    @Query('dlc') dlc: string
   ) {
-    const search = `search "${keyword}";`
+    const search = `search "${keyword}";`,
+      mainGameOnly = dlc !== '1'
     const body = [
       'fields *, cover.*, platforms.*;',
       search,
-      platforms && `where platforms=(${platforms});`,
+      (mainGameOnly || platforms) && 'where',
+      mainGameOnly && 'category = 0',
+      (mainGameOnly && platforms) && '&',
+      platforms && `platforms = (${platforms})`,
+      (mainGameOnly || platforms) && ';',
       'limit 40;'
     ].join(' ')
     // console.log('/search/', keyword, platforms, body)

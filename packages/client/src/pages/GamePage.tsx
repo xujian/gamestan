@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Chip, Stack } from '@mui/material'
-import { useParams } from 'react-router-dom'
+import { Box, Chip, Stack, Typography } from '@mui/material'
+import { Link, useParams } from 'react-router-dom'
 import { useBus, useHttp } from '../contexts'
 import { Game, Platform } from '@gamestan/models'
+import PlatformsChips from '../components/PlatformChips'
 
 const GamePage: React.FC = () => {
   const { id } = useParams(),
@@ -24,13 +25,15 @@ const GamePage: React.FC = () => {
       backgroundSize: 'cover',
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center center',
-      aspectRatio: '16/8',
+      aspectRatio: '16/6',
       maxWidth: 1280,
       display: 'flex',
       alignItems: 'flex-end',
-      p: 1,
+      px: 4,
+      py: 2,
       '& h1': {
         fontSize: 60,
+        lineHeight: '60px',
       },
       borderRadius: {
         lg: '20px',
@@ -46,16 +49,28 @@ const GamePage: React.FC = () => {
             backgroundImage: `url(${game.screenshots[0].url.replace('thumb', 'screenshot_big_2x')})`,
           }}>
           <h1>{game.name}</h1>
+          <Typography component="label">Released Date: {game.firstReleaseDate}</Typography>
         </Box>
         {game.platforms && (
-          <Stack direction="row" spacing={1} className="platforms"
-            sx={{py: 2}}>
-            {game.platforms.map((platform: Platform) => (
-              <Chip color="secondary" key={platform.slug} label={platform.name}></Chip>
-            ))}
-          </Stack>
+          <Box sx={{py:2}}>
+            <PlatformsChips data={game.platforms} size="middle" />
+          </Box>
         )}
         <article className="game-page">
+          <Typography component="h2" sx={{fontSize: 14}}>Storyline</Typography>
+          <Typography paragraph={true}>
+            {game.summary}
+          </Typography>
+          <Box className="gradient-contour" sx={{
+            borderRadius: '20px',
+            py: 1,
+            px: 2,
+          }}>
+            <Typography component="label">Franchise</Typography>
+            <Link to={`/franchises/${game.franchises[0].id}`}>
+              <Typography sx={{fontSize: 14, fontWeight: 900}}>{game.franchises[0].name}</Typography>
+            </Link>
+          </Box>
         </article>
       </>
     )

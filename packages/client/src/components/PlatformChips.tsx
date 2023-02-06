@@ -6,6 +6,7 @@ import { platforms } from '../consts'
 
 export type PlatformsChipsProps = {
   data: Platform[] | number[],
+  size?: 'middle' | 'small'
 }
 
 const PlatformsChips: React.FC<PlatformsChipsProps> = ({data}: PlatformsChipsProps) => {
@@ -14,8 +15,8 @@ const PlatformsChips: React.FC<PlatformsChipsProps> = ({data}: PlatformsChipsPro
     <>
       {data.map(platform => {
       const model: Platform | undefined = typeof platform === 'number'
-        ? platforms.find(p => p.id === platform)
-        : platform
+        ? platforms.find(p => p.id == platform)
+        : platforms.find(p => p.id == platform.id)
       return model && (
         <Chip key={model.id} label={model.name}
           size="small"
