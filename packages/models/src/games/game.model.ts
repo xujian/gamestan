@@ -1,4 +1,6 @@
+import { Fact } from './fact.model'
 import { Franchise } from './franchise.model'
+import { Genre } from './genre.model'
 import { Image } from './image.model'
 import { Platform } from './platform.model'
 
@@ -17,12 +19,12 @@ export interface Game {
   dlcs: number[]
   firstReleaseDate: number
   franchises: Franchise[]
-  gameEngines: number[]
-  gameModes: number[]
-  genres: number[]
+  gameEngines: Fact[]
+  gameModes: Fact[]
+  genres: Genre[]
   hypes: number
   involvedCompanies: number[]
-  keywords: number[]
+  keywords: Fact[]
   name: string
   platforms: Platform[]
   rating: number

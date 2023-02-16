@@ -41,10 +41,11 @@ export class GamesController {
   ) {
     const where = `where id = ${id};`,
       body = [
-        'fields *, cover.*, artworks.*, franchises.*, genres.*, platforms.*, screenshots.*;',
+        'fields *, cover.*, artworks.*, franchises.*, genres.*, platforms.*, game_modes.*, keywords.*, game_engines.*, screenshots.*;',
         where
       ].join(' ')
-    const [game] = await this.axios.post<string, Game[]>('/games', body)
+    let [game] = await this.axios.post<string, Game[]>('/games', body)
+    game = this.format<Game>(game)
     return game
   }
 

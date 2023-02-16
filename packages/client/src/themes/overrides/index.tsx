@@ -2,6 +2,7 @@ import { ThemeOptions } from '@mui/material'
 import merge from 'lodash/merge'
 import MuiBUttonGroup from './ButtonGroup'
 import MuiCard from './Card'
+import MuiChip from './Chip'
 import MuiContainer from './Container'
 import MuiList from './List'
 import MuiMenu from './Menu'
@@ -21,5 +22,6 @@ export default function componentOverrides (theme: ThemeOptions) {
     MuiList(),
     MuiSwitch(),
     MuiTypography(),
+    MuiChip(),
   )
 }

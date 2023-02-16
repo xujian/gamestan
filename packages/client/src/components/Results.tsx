@@ -61,7 +61,7 @@ const Results: React.FC<ResultshProps> = (props: ResultshProps) => {
                     </>
                   }
                   secondary={
-                    <PlatformsChips data={game.platforms} />
+                    game.platforms && (<PlatformsChips data={game.platforms} />)
                   }>
                 </ListItemText>
               </ListItemButton>

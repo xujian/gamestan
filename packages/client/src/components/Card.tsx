@@ -1,42 +1,33 @@
-import React, { ForwardedRef, forwardRef } from 'react'
-import { Card, CardContent, Typography, useTheme } from '@mui/material'
+import React from 'react'
+import { Card as MuiCard, CardContent, SxProps, Typography, useTheme } from '@mui/material'
 
 type CardProps = {
-  [key: string]: any
+  title?: string,
+  sx?: SxProps,
+  children: React.ReactNode,
 }
 
-const AppCard = forwardRef<HTMLDivElement, CardProps>(
-  (props: CardProps, ref: ForwardedRef<HTMLDivElement>) => {
+const Card: React.FC<CardProps> = ({title, sx, children}: CardProps) => {
     const theme = useTheme()
     return (
-      <Card
+      <MuiCard 
         elevation={0}
-        ref={ref}
         sx={{
-          ...props.sx,
-          border: props.border ? '1px solid' : 'none',
+          ...sx,
           borderColor: theme.palette.mode === 'dark'
             ? theme.palette.divider
-            : theme.palette.grey,
+            : theme.palette.grey[100],
           backgroundColor: theme.palette.mode === 'dark'
             ? theme.palette.primary.dark
-            : theme.palette.primary.light,
-          ':hover': {
-            boxShadow: props.boxShadow
-              ? props.shadow || theme.shadows[2]
-              : 'inherit'
-          }
+            : theme.palette.primary.light
         }}>
-        {props.title &&
+        {title &&
           <Typography variant="h5" sx={{
             fontSize: 20
-          }}>{props.title}</Typography>}
-        {props.content && <CardContent>{props.children}</CardContent>}
-        {!props.content && props.children}
-      </Card>
+          }}>{title}</Typography>}
+        {children && <CardContent>{children}</CardContent>}
+      </MuiCard>
     )
-  })
+  }
 
-AppCard.displayName = 'Card'
-
-export default AppCard
+export default Card

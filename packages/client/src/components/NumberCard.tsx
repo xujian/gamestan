@@ -16,11 +16,10 @@ const NumberCard = ({
   percentage,
   color,
   title,
-  extra
 }: NumberCardProps) => {
   return (
-    <Card className="number-card" sx={{p: 2.5}}
-      title={title} extra={extra}>
+    <Card
+      title={title}>
       <Grid container>
         <Grid item>
           <Typography variant='h4' color='inherit'>

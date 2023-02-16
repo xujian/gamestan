@@ -10,7 +10,7 @@ export default function MuiCard () {
     MuiCardContent: {
       styleOverrides: {
         root: {
-          padding: 20,
+          padding: 12,
           '&:last-child': {
             paddingBottom: 20
           }

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { Box, Chip, Stack, Typography } from '@mui/material'
+import { Box, Chip, Grid, Stack, Typography } from '@mui/material'
 import { Link, useParams } from 'react-router-dom'
 import { useBus, useHttp } from '../contexts'
 import { Game, Platform } from '@gamestan/models'
 import PlatformsChips from '../components/PlatformChips'
+import Card from '../components/Card'
 
 const GamePage: React.FC = () => {
   const { id } = useParams(),
@@ -40,6 +41,33 @@ const GamePage: React.FC = () => {
         sm: 0,
       }
     }
+    type Fact = {
+      title: string,
+      key: 'gameModes' | 'gameEngines' | 'genres' | 'keywords',
+      gradient: {start: string, end: string}
+    }
+    const facts: Fact[] = [
+      {
+        title: 'Game Modes',
+        key: 'gameModes',
+        gradient: {start: '#0FF0B3', end: '#036ED9'}
+      },
+      {
+        title: 'Game engines',
+        key: 'gameEngines',
+        gradient: {start: '#0FF0B3', end: '#036ED9'}
+      },
+      {
+        title: 'Genres',
+        key: 'genres',
+        gradient: {start: '#0FF0B3', end: '#036ED9'}
+      },
+      {
+        title: 'Keywords',
+        key: 'keywords',
+        gradient: {start: '#0FF0B3', end: '#036ED9'}
+      },
+    ]
   return game 
     ? (
       <>
@@ -61,16 +89,37 @@ const GamePage: React.FC = () => {
           <Typography paragraph={true}>
             {game.summary}
           </Typography>
-          <Box className="gradient-contour" sx={{
-            borderRadius: '20px',
-            py: 1,
-            px: 2,
-          }}>
-            <Typography component="label">Franchise</Typography>
-            <Link to={`/franchises/${game.franchises[0].id}`}>
-              <Typography sx={{fontSize: 14, fontWeight: 900}}>{game.franchises[0].name}</Typography>
-            </Link>
-          </Box>
+          {game.franchises && game.franchises.length && (
+            <Box className="gradient-contour" sx={{
+              borderRadius: '20px',
+              py: 1,
+              px: 2,
+            }}>
+              <Typography component="label">Franchise</Typography>
+              <Link to={`/franchises/${game.franchises[0].id}`}>
+                <Typography sx={{fontSize: 14, fontWeight: 900}}>{game.franchises[0].name}</Typography>
+              </Link>
+            </Box>)
+          }
+          <Grid container spacing={2} sx={{my:2}}>
+            { facts.map(f => (
+              <Grid item xs={3} key={f.title}>
+                <Card sx={{
+                  p:1,
+                  height: '100%',
+                  background:'linear-gradient(135deg, #0FF0B3 0%,#036ED9 100%);'}}>
+                  <Typography sx={{ fontSize: 14 }} gutterBottom>
+                    {f.title}
+                  </Typography>
+                  <Box sx={{mb: -1}}>
+                  { game[f.key] && game[f.key].map(s => (
+                    <Chip key={s.id} label={s.name} />
+                  ))}
+                  </Box>
+                </Card>
+              </Grid>
+            ))}
+          </Grid>
         </article>
       </>
     )
